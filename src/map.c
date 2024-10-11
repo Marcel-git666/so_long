@@ -6,11 +6,11 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:28:49 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/11 16:58:52 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/11 20:01:02 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "libft.h"
 #include "so_long.h"
 
 int	check_walls(char **map, int i, int len)
@@ -62,17 +62,10 @@ int	validate_map(char **map)
 	return (1);
 }
 
-int	create_map(char *file_content, char **map)
+int	create_map(char *file_content, char ***map)
 {
-	map = ft_split(file_content, '\n');
-	if (!map)
+	*map = ft_split(file_content, '\n');
+	if (!*map)
 		return (write(2, "Error creating map from file.\n", 31), 0);
-	int i = 0;
-	ft_printf("create map - checking result\n");
-	while (map[i])
-	{
-		ft_printf("Map line %d: %s\n", i, map[i]);
-		i++;
-	}
 	return (1);
 }

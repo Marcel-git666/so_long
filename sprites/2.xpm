@@ -1,0 +1,24 @@
+/* XPM */
+static char * XFACE[] = {
+/* width height num_colors chars_per_pixel */
+"16 16 3 1",
+"a c #575e6f"
+"b c #a4aaaa"
+"c c #757d90"
+"abbbbbbbbbbbbbbb",
+"abcbbbbbbbbbbbcb",
+"abbbbbbbbbbbbbbb",
+"abbbbbbbbbbbbbbb",
+"abbbbbbbbbbbbbbb",
+"abbbbbbbbbbbbbbb",
+"abcbbbbbbbbbbbcb",
+"abbbbbbbbbbbbbbb",
+"abbbbbbbbbbbbbbb",
+"aaaaaaaaaaaaaaaa",
+"abbbbbbbbbbbbbbb",
+"abcbbbbbbbbbbbcb",
+"abbbbbbbbbbbbbbb",
+"abbbbbbbbbbbbbbb",
+"abbbbbbbbbbbbbbb",
+"abbbbbbbbbbbbbbb",
+};

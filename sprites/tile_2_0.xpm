@@ -1,0 +1,28 @@
+/* XPM */
+static char * XFACE[] = {
+/* width height num_colors chars_per_pixel */
+"16 16 7 1",
+"a c #755733"
+"b c #3a6426"
+"c c #5b851e"
+"d c #94703a"
+"e c #2b506f"
+"f c #25709d"
+"g c #25859d"
+"aabacaaababaabaa",
+"addaadaddabdddad",
+"addaddddddaddddd",
+"addddddddddddddd",
+"eeeeeeeeeeeeeeee",
+"efffffffffffffff",
+"efffffffffffffff",
+"efffffggffffffff",
+"efffgfffffffffff",
+"efggggfgggffffff",
+"efffggggffffffff",
+"efffffffffffffff",
+"efffffffffffffff",
+"efffffffffffffff",
+"effffffffffgggff",
+"efffffffgggggffg",
+};

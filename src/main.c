@@ -6,13 +6,12 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/11 16:59:35 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/11 20:42:08 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "libft.h"
 #include "so_long.h"
-
 
 int	open_file(char *name, char **file_content)
 {
@@ -75,16 +74,8 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!open_file(argv[1], &file_content))
 		return (1);
-	ft_printf("File content:\n%s\n", file_content);
-	if (!create_map(file_content, map))
+	if (!create_map(file_content, &map))
 		return (free(file_content), 1);
-	i = 0;
-	ft_printf("Map has been succesfully created...\n");
-	while (map[i])
-	{
-		ft_printf("Map line %d: %s\n", i, map[i]);
-		i++;
-	}
 	if (!validate_map(map))
 	{
 		free(file_content);
@@ -95,6 +86,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	ft_printf("Your map is valid. Good job!\n");
+	init_graphics(map);
 	free(file_content);
 	i = 0;
 	while (map[i])
