@@ -6,7 +6,7 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 16:05:35 by mmravec           #+#    #+#              #
-#    Updated: 2024/10/10 18:37:53 by mmravec          ###   ########.fr        #
+#    Updated: 2024/10/11 16:25:08 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc-14
 CFLAGS = -Wall -Werror -Wextra
 
 # Source files for the server
-SRCS = main.c
+SRCS = main.c map.c
 OBJS = $(SRCS:.c=.o)
 
 # Path to the libft directory

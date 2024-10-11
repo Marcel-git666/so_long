@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:26:55 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/09 19:26:46 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/11 16:58:00 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ char	**ft_split(char const *s, char c)
 	if (!result)
 		return (NULL);
 	if (!extract_words(result, &s, c, &words))
+	{
+		free_allocated_memory(result, words);
 		return (NULL);
+	}
 	result[words] = NULL;
 	return (result);
 }
