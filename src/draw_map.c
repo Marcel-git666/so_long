@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:03:34 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/11 21:31:04 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/14 11:23:26 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,71 +14,68 @@
 #include "so_long.h"
 #include "libft.h"
 
-#include "mlx.h"
-#include "so_long.h"
-#include "libft.h"
-
-#define TILE_SIZE 16  // Set the tile size (this should match the size of your sprites)
-
-// Function to draw the map based on the .ber file
-void draw_map(char **map, t_data *data)
+static t_sprites	load_sprites(void *mlx_ptr)
 {
-    int x, y;
-    int width, height;  // Declare width and height for the images
-    void *img_player, *img_wall, *img_empty, *img_collectible, *img_exit;
+	t_sprites		sprites;
+	t_dimension		dim;
 
-	ft_putendl_fd("Loading player sprite...", 1);
-	img_player = mlx_xpm_file_to_image(data->mlx_ptr, "sprites/1.xpm", &width, &height);
-	if (!img_player)
+	sprites.player = mlx_xpm_file_to_image(mlx_ptr,
+			"sprites/player.xpm", &dim.width, &dim.height);
+	sprites.wall = mlx_xpm_file_to_image(mlx_ptr,
+			"sprites/wall.xpm", &dim.width, &dim.height);
+	sprites.empty = mlx_xpm_file_to_image(mlx_ptr,
+			"sprites/empty.xpm", &dim.width, &dim.height);
+	sprites.collectible = mlx_xpm_file_to_image(mlx_ptr,
+			"sprites/crate.xpm", &dim.width, &dim.height);
+	sprites.exit = mlx_xpm_file_to_image(mlx_ptr,
+			"sprites/exit.xpm", &dim.width, &dim.height);
+	if (!sprites.player || !sprites.wall || !sprites.empty
+		|| !sprites.collectible || !sprites.exit)
 	{
-		write(2, "Error: Failed to load player sprite\n", 36);
+		write(2, "Error: Failed to load sprites\n", 30);
 		exit(1);
 	}
-	ft_putendl_fd("Player sprite loaded.", 1);
+	return (sprites);
+}
 
-	// Load the images (sprites)
-	img_player = mlx_xpm_file_to_image(data->mlx_ptr, "sprites/1.xpm", &width, &height);
-	if (!img_player)
-		write(2, "Error: Failed to load player sprites\n", 30);
-    img_wall = mlx_xpm_file_to_image(data->mlx_ptr, "sprites/wall.xpm", &width, &height);
-	if (!img_wall)
-		write(2, "Error: Failed to load wall sprites\n", 30);
-    img_empty = mlx_xpm_file_to_image(data->mlx_ptr, "sprites/2.xpm", &width, &height);
-	if (!img_empty)
-		write(2, "Error: Failed to load empty sprites\n", 37);
-    img_collectible = mlx_xpm_file_to_image(data->mlx_ptr, "sprites/3.xpm", &width, &height);
-	if (!img_collectible)
-		write(2, "Error: Failed to load collectible sprites\n", 43);
-    img_exit = mlx_xpm_file_to_image(data->mlx_ptr, "sprites/4.xpm", &width, &height);
-	if (!img_exit)
-		write(2, "Error: Failed to load exit sprites\n", 36);
+static void	*get_sprite_image(char tile, t_sprites sprites)
+{
+	if (tile == 'P')
+		return (sprites.player);
+	else if (tile == '1')
+		return (sprites.wall);
+	else if (tile == '0')
+		return (sprites.empty);
+	else if (tile == 'C')
+		return (sprites.collectible);
+	else if (tile == 'E')
+		return (sprites.exit);
+	return (NULL);
+}
 
-    // Check if the images were loaded correctly
-    if (!img_player || !img_wall || !img_empty || !img_collectible || !img_exit)
-    {
-        write(2, "Error: Failed to load sprites\n", 30);
-        exit(1);
-    }
+void	draw_map(char **map, t_data *data)
+{
+	t_point		pos;
+	t_sprites	sprites;
+	void		*img;
 
-    // Loop through the map and place the appropriate sprite
-    y = 0;
-    while (map[y])
-    {
-        x = 0;
-        while (map[y][x])
-        {
-            if (map[y][x] == 'P')
-                mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img_player, x * TILE_SIZE, y * TILE_SIZE);
-            else if (map[y][x] == '1')
-                mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img_wall, x * TILE_SIZE, y * TILE_SIZE);
-            else if (map[y][x] == '0')
-                mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img_empty, x * TILE_SIZE, y * TILE_SIZE);
-            else if (map[y][x] == 'C')
-                mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img_collectible, x * TILE_SIZE, y * TILE_SIZE);
-            else if (map[y][x] == 'E')
-                mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img_exit, x * TILE_SIZE, y * TILE_SIZE);
-            x++;
-        }
-        y++;
-    }
+	sprites = load_sprites(data->mlx_ptr);
+	pos.y = 0;
+	img = NULL;
+	while (map[pos.y])
+	{
+		pos.x = 0;
+		while (map[pos.y][pos.x])
+		{
+			img = get_sprite_image(map[pos.y][pos.x], sprites);
+			if (img)
+			{
+				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+					img, pos.x * TILE_SIZE, pos.y * TILE_SIZE);
+				ft_printf("Drawing tile %c at (%d, %d)\n", map[pos.y][pos.x], pos.x, pos.y);
+			}
+			pos.x++;
+		}
+		pos.y++;
+	}
 }

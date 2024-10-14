@@ -6,12 +6,13 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/14 08:57:12 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/12 09:06:14 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft/libft.h"
 #include "so_long.h"
+
 
 int	open_file(char *name, char **file_content)
 {
@@ -28,24 +29,15 @@ int	open_file(char *name, char **file_content)
 		return (write(2, "Error: Memory allocation failed.\n", 34), 0);
 
 	*file_content[0] = '\0';
-	ret = read(fd, buffer, 4096);
-	while (ret > 0)
+	while ((ret = read(fd, buffer, 4096)) > 0)
 	{
 		buffer[ret] = '\0';
 		*file_content = ft_strjoin(*file_content, buffer);
 		if (!*file_content)
 			return (write(2, "Error: Memory allocation failed.\n", 34), 0);
-		ret = read(fd, buffer, 4096);
 	}
 	close(fd);
 	return (1);
-}
-
-char	*extract_extra_spaces(char *name)
-{
-	while (*name == ' ' || (*name >= 9 && *name <= 13))
-		name++;
-	return (name);
 }
 
 int	check_correct_map_name(char *name)
@@ -75,8 +67,16 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!open_file(argv[1], &file_content))
 		return (1);
-	if (!create_map(file_content, &map))
+	ft_printf("File content:\n%s\n", file_content);
+	if (!create_map(file_content, map))
 		return (free(file_content), 1);
+	i = 0;
+	ft_printf("Map has been succesfully created...\n");
+	while (map[i])
+	{
+		ft_printf("Map line %d: %s\n", i, map[i]);
+		i++;
+	}
 	if (!validate_map(map))
 	{
 		free(file_content);
@@ -87,7 +87,6 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	ft_printf("Your map is valid. Good job!\n");
-	init_graphics(map);
 	free(file_content);
 	i = 0;
 	while (map[i])

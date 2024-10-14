@@ -6,7 +6,7 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 16:05:35 by mmravec           #+#    #+#              #
-#    Updated: 2024/10/11 21:04:03 by mmravec          ###   ########.fr        #
+#    Updated: 2024/10/14 11:06:57 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Werror -Wextra -Iinclude -g
 # Source files
 SRCS_DIR = src
 SRCS = $(SRCS_DIR)/main.c $(SRCS_DIR)/map.c $(SRCS_DIR)/graphics_init.c \
-	$(SRCS_DIR)/draw_map.c
+	$(SRCS_DIR)/draw_map.c $(SRCS_DIR)/move.c
 OBJS = $(SRCS:.c=.o)
 
 # Path to the libft directory
