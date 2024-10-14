@@ -6,12 +6,28 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/14 08:57:12 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/14 12:39:59 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "so_long.h"
+
+static int	append_to_content(char **file_content, char *buffer)
+{
+	char	*temp;
+
+	temp = ft_strjoin(*file_content, buffer);
+	if (!temp)
+	{
+		free(*file_content);
+		write(2, "Error: Memory allocation failed.\n", 34);
+		return (0);
+	}
+	free(*file_content);
+	*file_content = temp;
+	return (1);
+}
 
 int	open_file(char *name, char **file_content)
 {
@@ -32,9 +48,8 @@ int	open_file(char *name, char **file_content)
 	while (ret > 0)
 	{
 		buffer[ret] = '\0';
-		*file_content = ft_strjoin(*file_content, buffer);
-		if (!*file_content)
-			return (write(2, "Error: Memory allocation failed.\n", 34), 0);
+		if (!append_to_content(file_content, buffer))
+			return (0);
 		ret = read(fd, buffer, 4096);
 	}
 	close(fd);

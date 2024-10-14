@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/14 11:22:22 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/14 12:45:49 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,23 @@ void	init_player_position(t_data *data, char **map)
 {
 	int		x;
 	int		y;
-	int		player_found = 0;
-    int		crate_found = 0;
 
+	data->move_count = 0;
 	y = 0;
-	while (map[y] && !(player_found && crate_found))
+	while (map[y])
 	{
 		x = 0;
-		while (map[y][x] && !(player_found && crate_found))
+		while (map[y][x])
 		{
 			if (map[y][x] == 'P')
 			{
 				data->player_pos.x = x;
 				data->player_pos.y = y;
-				player_found = 1;
 			}
 			if (map[y][x] == 'C')
 			{
 				data->crate_pos.x = x;
 				data->crate_pos.y = y;
-				crate_found = 1;
 			}
 			x++;
 		}
@@ -77,6 +74,9 @@ void	init_player_position(t_data *data, char **map)
 void	init_graphics(char **map)
 {
 	t_data	data;
+	int		window_width;
+	int		window_height;
+	int		map_height;
 
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
@@ -84,7 +84,12 @@ void	init_graphics(char **map)
 		write(2, "Error: Unable to initialize MiniLibX\n", 37);
 		exit(1);
 	}
-	data.win_ptr = mlx_new_window(data.mlx_ptr, 800, 600, "so_long");
+	map_height = 0;
+	while (map[map_height])
+    	map_height++;
+	window_width =  ft_strlen(map[0]) * TILE_SIZE;
+	window_height = map_height * TILE_SIZE;
+	data.win_ptr = mlx_new_window(data.mlx_ptr, window_width, window_height, "so_long");
 	if (!data.win_ptr)
 	{
 		write(2, "Error: Unable to create window\n", 31);
