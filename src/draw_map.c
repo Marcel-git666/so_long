@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:03:34 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/14 17:46:46 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/15 09:28:41 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,31 @@ static t_sprites	load_sprites(void *mlx_ptr)
 			"sprites/crate.xpm", &dim.width, &dim.height);
 	sprites.exit = mlx_xpm_file_to_image(mlx_ptr,
 			"sprites/exit.xpm", &dim.width, &dim.height);
-	sprites.digit_0 = mlx_xpm_file_to_image(mlx_ptr,
-			"sprites/numbers/resized.xpm", &dim.width, &dim.height);
-	if (!sprites.digit_0)
+	sprites.free_exit = mlx_xpm_file_to_image(mlx_ptr,
+			"sprites/free_exit.xpm", &dim.width, &dim.height);
+	// sprites.digit_0 = mlx_xpm_file_to_image(mlx_ptr,
+	// 		"sprites/numbers/resized.xpm", &dim.width, &dim.height);
+	// if (!sprites.digit_0)
+	// {
+	// 	write(2, "Error: Failed to load 0.xpm\n", 29);
+	// 	exit(1);
+	// }
+	sprites.digit_1 = mlx_xpm_file_to_image(mlx_ptr,
+			"sprites/numbers/1.xpm", &dim.width, &dim.height);
+	if (!sprites.digit_1)
 	{
 		write(2, "Error: Failed to load 0.xpm\n", 29);
 		exit(1);
 	}
-	sprites.digit_1 = mlx_xpm_file_to_image(mlx_ptr,
-			"sprites/numbers/1.xpm", &dim.width, &dim.height);
 	sprites.digit_2 = mlx_xpm_file_to_image(mlx_ptr,
 			"sprites/numbers/2.xpm", &dim.width, &dim.height);
+	if (!sprites.digit_2)
+	{
+		write(2, "Error: Failed to load 0.xpm\n", 29);
+		exit(1);
+	}
 	if (!sprites.player || !sprites.wall || !sprites.empty
-		|| !sprites.collectible || !sprites.exit)
+		|| !sprites.collectible || !sprites.exit || !sprites.free_exit)
 	{
 		write(2, "Error: Failed to load sprites\n", 30);
 		exit(1);
@@ -49,7 +61,7 @@ static t_sprites	load_sprites(void *mlx_ptr)
 	return (sprites);
 }
 
-static void	*get_sprite_image(char tile, t_sprites sprites)
+static void	*get_sprite_image(t_data *data, char tile, t_sprites sprites)
 {
 	if (tile == 'P')
 		return (sprites.player);
@@ -60,7 +72,12 @@ static void	*get_sprite_image(char tile, t_sprites sprites)
 	else if (tile == 'C')
 		return (sprites.collectible);
 	else if (tile == 'E')
-		return (sprites.exit);
+	{
+		if (data->crate_count == 0)
+			return (sprites.free_exit);
+		else
+			return (sprites.exit);
+	}
 	return (NULL);
 }
 
@@ -74,9 +91,9 @@ void	draw_number(t_data *data, int number, int x, int y)
     str = ft_itoa(number);  // Convert the number to a string
 	i = 0;
 	ft_printf("Drawing %s to (%d, %d)\n", str, x, y);
-	img = data->sprites.digit_0;
+	img = data->sprites.digit_1;
     if (img)
-        mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img, 0, 0);
+        mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img, 10, 10);
     else
         ft_printf("Error: digit_0 image not loaded\n");
 
@@ -115,7 +132,7 @@ void	draw_map(char **map, t_data *data)
 		pos.x = 0;
 		while (map[pos.y][pos.x])
 		{
-			img = get_sprite_image(map[pos.y][pos.x], sprites);
+			img = get_sprite_image(data, map[pos.y][pos.x], sprites);
 			if (img)
 			{
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,

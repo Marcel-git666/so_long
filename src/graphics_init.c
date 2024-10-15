@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/14 12:45:49 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/15 08:53:36 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	init_player_position(t_data *data, char **map)
 	int		y;
 
 	data->move_count = 0;
+	data->crate_count = 0;
 	y = 0;
 	while (map[y])
 	{
@@ -63,6 +64,7 @@ void	init_player_position(t_data *data, char **map)
 			{
 				data->crate_pos.x = x;
 				data->crate_pos.y = y;
+				data->crate_count++;
 			}
 			x++;
 		}
@@ -86,10 +88,11 @@ void	init_graphics(char **map)
 	}
 	map_height = 0;
 	while (map[map_height])
-    	map_height++;
-	window_width =  ft_strlen(map[0]) * TILE_SIZE;
+		map_height++;
+	window_width = ft_strlen(map[0]) * TILE_SIZE;
 	window_height = map_height * TILE_SIZE;
-	data.win_ptr = mlx_new_window(data.mlx_ptr, window_width, window_height, "so_long");
+	data.win_ptr = mlx_new_window(data.mlx_ptr, window_width,
+			window_height, "so_long");
 	if (!data.win_ptr)
 	{
 		write(2, "Error: Unable to create window\n", 31);

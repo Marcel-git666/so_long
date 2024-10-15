@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/14 17:28:52 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/15 09:36:22 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_sprites
 	void	*empty;
 	void	*collectible;
 	void	*exit;
+	void	*free_exit;
 	void	*digit_0;
 	void	*digit_1;
 	void	*digit_2;
@@ -43,12 +44,13 @@ typedef struct s_sprites
 
 typedef struct s_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_point	player_pos;
-	t_point	crate_pos;
-	int		move_count;
-	char	**map;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_point		player_pos;
+	t_point		crate_pos;
+	int			move_count;
+	char		**map;
+	int			crate_count;
 	t_sprites	sprites;
 }				t_data;
 
@@ -61,6 +63,8 @@ typedef struct s_dimension
 int		validate_map(char **map);
 int		create_map(char *file_content, char ***map);
 void	init_graphics(char **map);
+int		handle_keypress(int keycode, t_data *data);
+int		handle_exit(t_data *data);
 void	draw_map(char **map, t_data *data);
 void	move_player(t_data *data, int dx, int dy);
 void	draw_number(t_data *data, int number, int x, int y);
