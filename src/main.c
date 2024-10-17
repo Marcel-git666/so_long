@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/14 12:39:59 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/16 12:40:49 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,7 @@ char	*extract_extra_spaces(char *name)
 
 int	check_correct_map_name(char *name)
 {
-	size_t		i;
-
-	i = ft_strlen(name);
-	if (!((name[i - 4] == '.') && (name[i - 1] == 'r') && (name[i - 2] == 'e')
-			&& (name[i - 3] == 'b')))
+	if (ft_strncmp(name + ft_strlen(name) - 4, ".ber", 4))
 		return (write(2, ".ber not detected\n", 19), 0);
 	return (1);
 }
