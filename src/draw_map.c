@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:03:34 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/18 16:38:39 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:32:58 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "so_long.h"
 #include "libft.h"
 
-static t_sprites	load_sprites(void *mlx_ptr)
+t_sprites	load_sprites(void *mlx_ptr)
 {
 	t_sprites		sprites;
 	t_dimension		dim;
@@ -119,14 +119,11 @@ static void	*get_sprite_image(t_data *data, char tile, t_sprites sprites)
 //     free(str);  // Free the allocated string from ft_itoa
 // }
 
-void	draw_map(char **map, t_data *data)
+void	draw_map(char **map, t_data *data, t_sprites sprites)
 {
 	t_point		pos;
-	t_sprites	sprites;
 	void		*img;
 
-	sprites = load_sprites(data->mlx_ptr);
-	ft_printf("Sprites loaded...\n");
 	pos.y = 0;
 	img = NULL;
 	while (map[pos.y])
@@ -136,6 +133,12 @@ void	draw_map(char **map, t_data *data)
 		while (map[pos.y][pos.x])
 		{
 			img = get_sprite_image(data, map[pos.y][pos.x], sprites);
+			if (img == NULL)
+			{
+				ft_printf("Error: Failed to load sprite for %c at (%d, %d)\n",
+					map[pos.y][pos.x], pos.x, pos.y);
+				continue;
+			}
 			if (img)
 			{
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
@@ -145,4 +148,5 @@ void	draw_map(char **map, t_data *data)
 		}
 		pos.y++;
 	}
+	ft_printf("End of draw map: y:%d\n", pos.y);
 }
