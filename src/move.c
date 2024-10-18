@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:43:33 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/15 09:35:32 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/18 16:35:51 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	move_to_empty(t_data *data, int new_x, int new_y)
 	data->map[new_y][new_x] = 'P';
 	data->player_pos.x = new_x;
 	data->player_pos.y = new_y;
+	ft_printf("Player has moved..\n");
 }
 
 void	move_crate(t_data *data, int new_x, int new_y)
@@ -101,6 +102,7 @@ void	move_player(t_data *data, int dx, int dy)
 		move_to_empty(data, new_x, new_y);
 		finish_the_game(data);
 	}
+	ft_printf("Redrawing map....\n");
 	draw_map(data->map, data);
 	// draw_number(data, 210, 0, 0);
 	show_move_count(data);

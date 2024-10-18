@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/15 09:36:22 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:19:29 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,17 @@
 
 # define ESC_KEY 53
 # define DESTROY_NOTIFY 17
-# define UP_KEY 126
-# define DOWN_KEY 125
-# define LEFT_KEY 123
-# define RIGHT_KEY 124
+// # ifdef __APPLE__
+// #  define UP_KEY 126
+// #  define DOWN_KEY 125
+// #  define LEFT_KEY 123
+// #  define RIGHT_KEY 124
+// # elif __linux__
+#  define UP_KEY 65362
+#  define DOWN_KEY 65364
+#  define LEFT_KEY 65361
+#  define RIGHT_KEY 65363
+// # endif
 
 # define TILE_SIZE 64
 
@@ -62,11 +69,13 @@ typedef struct s_dimension
 
 int		validate_map(char **map);
 int		create_map(char *file_content, char ***map);
-void	init_graphics(char **map);
+void	init_graphics(t_data *data, char **map);
 int		handle_keypress(int keycode, t_data *data);
 int		handle_exit(t_data *data);
 void	draw_map(char **map, t_data *data);
 void	move_player(t_data *data, int dx, int dy);
-void	draw_number(t_data *data, int number, int x, int y);
+void	deinit(char **map, char *file_content);
+void	game_loop(t_data *data);
+//void	draw_number(t_data *data, int number, int x, int y);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/15 08:53:36 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:22:35 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,14 @@ void	init_player_position(t_data *data, char **map)
 }
 
 // Initialize graphics, create window, set event hooks
-void	init_graphics(char **map)
+void	init_graphics(t_data *data, char **map)
 {
-	t_data	data;
 	int		window_width;
 	int		window_height;
 	int		map_height;
 
-	data.mlx_ptr = mlx_init();
-	if (!data.mlx_ptr)
+	data->mlx_ptr = mlx_init();
+	if (!data->mlx_ptr)
 	{
 		write(2, "Error: Unable to initialize MiniLibX\n", 37);
 		exit(1);
@@ -91,18 +90,24 @@ void	init_graphics(char **map)
 		map_height++;
 	window_width = ft_strlen(map[0]) * TILE_SIZE;
 	window_height = map_height * TILE_SIZE;
-	data.win_ptr = mlx_new_window(data.mlx_ptr, window_width,
+	data->win_ptr = mlx_new_window(data->mlx_ptr, window_width,
 			window_height, "so_long");
-	if (!data.win_ptr)
+	if (!data->win_ptr)
 	{
 		write(2, "Error: Unable to create window\n", 31);
 		exit(1);
 	}
-	data.map = map;
-	init_player_position(&data, map);
-	mlx_hook(data.win_ptr, 2, 1L << 0, handle_keypress, &data);
-	mlx_hook(data.win_ptr, DESTROY_NOTIFY, 0, handle_exit, &data);
-	draw_map(map, &data);
-	mlx_loop(data.mlx_ptr);
+	data->map = map;
+	init_player_position(data, map);
 }
 
+void	deinit(char **map, char *file_content)
+{
+	int		i;
+
+	i = 0;
+	free(file_content);
+	while (map[i])
+		free(map[i++]);
+	free(map);
+}
