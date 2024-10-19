@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/19 18:49:49 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/19 20:56:51 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ int handle_keypress(int keycode, t_data *data)
 	ft_printf("Key %d is pressed.\n", keycode);
 	if (keycode == ESC_KEY)
 	{
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		exit(0);
+		data->game_over = 1;
+		mlx_loop_end(data->mlx_ptr);
+		return (0);
 	}
 	if (keycode == UP_KEY && data->game_over == 0)
 		move_player(data, 0, -1);
@@ -38,8 +39,8 @@ int handle_keypress(int keycode, t_data *data)
 // Function to handle window close (cross click)
 int	handle_exit(t_data *data)
 {
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	exit(0);
+	data->game_over = 1;
+	mlx_loop_end(data->mlx_ptr);
 	return (0);
 }
 
@@ -103,13 +104,43 @@ void	init_graphics(t_data *data, char **map)
 	init_player_position(data, map);
 }
 
-void	deinit(char **map, char *file_content)
+void free_sprites(t_data *data)
+{
+	if (data->sprites.player)
+		mlx_destroy_image(data->mlx_ptr, data->sprites.player);
+	if (data->sprites.wall)
+		mlx_destroy_image(data->mlx_ptr, data->sprites.wall);
+	if (data->sprites.empty)
+		mlx_destroy_image(data->mlx_ptr, data->sprites.empty);
+	if (data->sprites.collectible)
+		mlx_destroy_image(data->mlx_ptr, data->sprites.collectible);
+	if (data->sprites.exit)
+		mlx_destroy_image(data->mlx_ptr, data->sprites.exit);
+	if (data->sprites.free_exit)
+		mlx_destroy_image(data->mlx_ptr, data->sprites.free_exit);
+}
+
+void free_map(char **map)
 {
 	int		i;
 
 	i = 0;
-	free(file_content);
 	while (map[i])
-		free(map[i++]);
+	{
+		free(map[i]);
+		i++;
+	}
 	free(map);
+}
+
+void	deinit(char **map, char *file_content, t_game *game)
+{
+	free_sprites(&game->data);
+	free_map(map);
+	if (file_content)
+		free(file_content);
+	if (game->data.win_ptr)
+		mlx_destroy_window(game->data.mlx_ptr, game->data.win_ptr);
+	if (game->data.mlx_ptr)
+		mlx_destroy_display(game->data.mlx_ptr);
 }

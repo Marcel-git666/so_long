@@ -1,0 +1,3 @@
+Your map is valid. Good job!
+Key 65307 is pressed.
+Call deinit.

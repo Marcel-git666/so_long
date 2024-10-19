@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 20:12:31 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/19 18:44:33 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/19 20:36:18 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int update_game(t_game *game)
 {
 	if (game->data.game_over == 1)
-		return (0);
+		return (1);
 	draw_map(game->data.map, &game->data, game->sprites);
 	show_move_count(&game->data);
 	return (0);

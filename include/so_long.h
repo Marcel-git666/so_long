@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/19 18:43:11 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/19 20:29:08 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int			handle_keypress(int keycode, t_data *data);
 int			handle_exit(t_data *data);
 void		draw_map(char **map, t_data *data, t_sprites sprites);
 void		move_player(t_data *data, int dx, int dy);
-void		deinit(char **map, char *file_content);
+void		deinit(char **map, char *file_content, t_game *game);
 void		game_loop(t_game *game);
 t_sprites	load_sprites(void *mlx_ptr);
 void		show_move_count(t_data *data);
