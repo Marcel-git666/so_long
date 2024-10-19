@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/19 20:29:08 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/19 21:23:57 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 # define SO_LONG_H
 # include <fcntl.h>
 
-// # define ESC_KEY 53
-# define ESC_KEY 65307
 # define DESTROY_NOTIFY 17
-// # ifdef __APPLE__
-// #  define UP_KEY 126
-// #  define DOWN_KEY 125
-// #  define LEFT_KEY 123
-// #  define RIGHT_KEY 124
-// # elif __linux__
+# ifdef __APPLE__
+#  define ESC_KEY 53
+#  define UP_KEY 126
+#  define DOWN_KEY 125
+#  define LEFT_KEY 123
+#  define RIGHT_KEY 124
+# elif __linux__
+#  define ESC_KEY 65307
 #  define UP_KEY 65362
 #  define DOWN_KEY 65364
 #  define LEFT_KEY 65361
 #  define RIGHT_KEY 65363
-// # endif
+# endif
 
 # define TILE_SIZE 64
 
@@ -83,6 +83,5 @@ void		deinit(char **map, char *file_content, t_game *game);
 void		game_loop(t_game *game);
 t_sprites	load_sprites(void *mlx_ptr);
 void		show_move_count(t_data *data);
-//void	draw_number(t_data *data, int number, int x, int y);
 
 #endif
