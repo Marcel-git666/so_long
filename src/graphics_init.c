@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/19 14:23:05 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/19 18:49:49 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int handle_keypress(int keycode, t_data *data)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		exit(0);
 	}
-	if (keycode == UP_KEY)
+	if (keycode == UP_KEY && data->game_over == 0)
 		move_player(data, 0, -1);
-	else if (keycode == DOWN_KEY)
+	else if (keycode == DOWN_KEY && data->game_over == 0)
 		move_player(data, 0, 1);
-	else if (keycode == LEFT_KEY)
-		move_player(data, -1, 0);
-	else if (keycode == RIGHT_KEY)
+	else if (keycode == LEFT_KEY && data->game_over == 0)
+		move_player(data, -1, 0 && data->game_over == 0);
+	else if (keycode == RIGHT_KEY && data->game_over == 0)
 		move_player(data, 1, 0);
 	return (0);
 }
@@ -50,6 +50,7 @@ void	init_player_position(t_data *data, char **map)
 
 	data->move_count = 0;
 	data->crate_count = 0;
+	data->game_over = 0;
 	y = 0;
 	while (map[y])
 	{

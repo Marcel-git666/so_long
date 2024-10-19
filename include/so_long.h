@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/19 15:07:18 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/19 18:43:11 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define SO_LONG_H
 # include <fcntl.h>
 
-# define ESC_KEY 53
+// # define ESC_KEY 53
+# define ESC_KEY 65307
 # define DESTROY_NOTIFY 17
 // # ifdef __APPLE__
 // #  define UP_KEY 126
@@ -56,6 +57,7 @@ typedef struct s_data
 	char		**map;
 	int			crate_count;
 	t_sprites	sprites;
+	int			game_over;
 }				t_data;
 
 typedef struct s_dimension

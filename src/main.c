@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/19 14:08:17 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/19 16:35:05 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,8 @@ int	main(int argc, char **argv)
 		return (deinit(map, file_content), 1);
 	ft_printf("Your map is valid. Good job!\n");
 	init_graphics(&game.data, map);
-
-	game_loop(&game);
 	game.sprites = load_sprites(game.data.mlx_ptr);
+	game_loop(&game);
 	deinit(map, file_content);
 	return (0);
 }
