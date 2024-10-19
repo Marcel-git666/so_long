@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/18 20:30:40 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/19 15:07:18 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ typedef struct s_sprites
 	void	*collectible;
 	void	*exit;
 	void	*free_exit;
-	void	*digit_0;
-	void	*digit_1;
-	void	*digit_2;
 }		t_sprites;
 
 typedef struct s_data
@@ -67,6 +64,12 @@ typedef struct s_dimension
 	int		height;
 }		t_dimension;
 
+typedef struct s_game
+{
+	t_data		data;
+	t_sprites	sprites;
+}		t_game;
+
 int			validate_map(char **map);
 int			create_map(char *file_content, char ***map);
 void		init_graphics(t_data *data, char **map);
@@ -75,8 +78,9 @@ int			handle_exit(t_data *data);
 void		draw_map(char **map, t_data *data, t_sprites sprites);
 void		move_player(t_data *data, int dx, int dy);
 void		deinit(char **map, char *file_content);
-void		game_loop(t_data *data);
+void		game_loop(t_game *game);
 t_sprites	load_sprites(void *mlx_ptr);
+void		show_move_count(t_data *data);
 //void	draw_number(t_data *data, int number, int x, int y);
 
 #endif

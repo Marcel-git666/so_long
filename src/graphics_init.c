@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/18 20:22:35 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/19 14:23:05 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 
 // Function to handle key press events
-int	handle_keypress(int keycode, t_data *data)
+int handle_keypress(int keycode, t_data *data)
 {
 	ft_printf("Key %d is pressed.\n", keycode);
 	if (keycode == ESC_KEY)
@@ -33,6 +33,7 @@ int	handle_keypress(int keycode, t_data *data)
 		move_player(data, 1, 0);
 	return (0);
 }
+
 
 // Function to handle window close (cross click)
 int	handle_exit(t_data *data)

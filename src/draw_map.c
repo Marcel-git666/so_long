@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:03:34 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/18 20:32:58 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/19 14:46:31 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_sprites	load_sprites(void *mlx_ptr)
 			"sprites/player.xpm", &dim.width, &dim.height);
 	sprites.wall = mlx_xpm_file_to_image(mlx_ptr,
 			"sprites/wall.xpm", &dim.width, &dim.height);
+	if (!sprites.wall)
+		ft_printf("Error: Failed to load wall sprite\n");
 	sprites.empty = mlx_xpm_file_to_image(mlx_ptr,
 			"sprites/empty.xpm", &dim.width, &dim.height);
 	sprites.collectible = mlx_xpm_file_to_image(mlx_ptr,
@@ -31,27 +33,6 @@ t_sprites	load_sprites(void *mlx_ptr)
 			"sprites/exit.xpm", &dim.width, &dim.height);
 	sprites.free_exit = mlx_xpm_file_to_image(mlx_ptr,
 			"sprites/free_exit.xpm", &dim.width, &dim.height);
-	// sprites.digit_0 = mlx_xpm_file_to_image(mlx_ptr,
-	// 		"sprites/numbers/resized.xpm", &dim.width, &dim.height);
-	// if (!sprites.digit_0)
-	// {
-	// 	write(2, "Error: Failed to load 0.xpm\n", 29);
-	// 	exit(1);
-	// }
-	sprites.digit_1 = mlx_xpm_file_to_image(mlx_ptr,
-			"sprites/numbers/1.xpm", &dim.width, &dim.height);
-	if (!sprites.digit_1)
-	{
-		write(2, "Error: Failed to load 0.xpm\n", 29);
-		exit(1);
-	}
-	sprites.digit_2 = mlx_xpm_file_to_image(mlx_ptr,
-			"sprites/numbers/2.xpm", &dim.width, &dim.height);
-	if (!sprites.digit_2)
-	{
-		write(2, "Error: Failed to load 0.xpm\n", 29);
-		exit(1);
-	}
 	if (!sprites.player || !sprites.wall || !sprites.empty
 		|| !sprites.collectible || !sprites.exit || !sprites.free_exit)
 	{
@@ -141,6 +122,12 @@ void	draw_map(char **map, t_data *data, t_sprites sprites)
 			}
 			if (img)
 			{
+				if (!data->mlx_ptr)
+					ft_printf("Error: mlx_ptr is NULL\n");
+				if (!data->win_ptr)
+					ft_printf("Error: win_ptr is NULL\n");
+				ft_printf("Loading sprite for %c at (%d, %d)\n",
+					map[pos.y][pos.x], pos.x, pos.y);
 				mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 					img, pos.x * TILE_SIZE, pos.y * TILE_SIZE);
 			}
