@@ -6,7 +6,7 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 16:05:35 by mmravec           #+#    #+#              #
-#    Updated: 2024/10/19 21:56:52 by mmravec          ###   ########.fr        #
+#    Updated: 2024/10/22 16:18:45 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = so_long
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S), Darwin)
-	CC = cc
+	CC = gcc-14
 	CFLAGS = -Wall -Werror -Wextra -Iinclude -g -D__APPLE__ -DGL_SILENCE_DEPRECATION
 	MLX_DIR = minilibx_macos
 	FRAMEWORKS = -framework OpenGL -framework AppKit
