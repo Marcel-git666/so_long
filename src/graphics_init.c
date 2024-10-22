@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/22 16:20:52 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/22 19:21:00 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int handle_keypress(int keycode, t_data *data)
 	if (keycode == ESC_KEY)
 	{
 		data->game_over = 1;
-		// mlx_loop_end(data->mlx_ptr);
+		mlx_loop_end(data->mlx_ptr);
 		return (0);
 	}
 	if (keycode == UP_KEY && data->game_over == 0)
@@ -40,7 +40,7 @@ int handle_keypress(int keycode, t_data *data)
 int	handle_exit(t_data *data)
 {
 	data->game_over = 1;
-	// mlx_loop_end(data->mlx_ptr);
+	mlx_loop_end(data->mlx_ptr);
 	return (0);
 }
 
@@ -141,6 +141,6 @@ void	deinit(char **map, char *file_content, t_game *game)
 		free(file_content);
 	if (game->data.win_ptr)
 		mlx_destroy_window(game->data.mlx_ptr, game->data.win_ptr);
-	// if (game->data.mlx_ptr)
-	// 	mlx_destroy_display(game->data.mlx_ptr);
+	if (game->data.mlx_ptr)
+		mlx_destroy_display(game->data.mlx_ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 20:12:31 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/19 20:36:18 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/22 16:43:22 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "so_long.h"
 #include "libft.h"
 
-int update_game(t_game *game)
+int	update_game(t_game *game)
 {
 	if (game->data.game_over == 1)
 		return (1);
@@ -30,4 +30,3 @@ void	game_loop(t_game *game)
 	mlx_loop_hook(game->data.mlx_ptr, &update_game, game);
 	mlx_loop(game->data.mlx_ptr);
 }
-

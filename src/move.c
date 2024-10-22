@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:43:33 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/19 18:45:45 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/22 16:44:48 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	show_move_count(t_data *data)
 	free(move_str);
 }
 
-void finish_the_game(t_data *data)
+void	finish_the_game(t_data *data)
 {
 	ft_printf("Finish the game called.\n");
 	data->game_over = 1;
@@ -71,15 +71,11 @@ void finish_the_game(t_data *data)
 
 void	move_player(t_data *data, int dx, int dy)
 {
-	int		player_x;
-	int		player_y;
 	int		new_x;
 	int		new_y;
 
-	player_x = data->player_pos.x;
-	player_y = data->player_pos.y;
-	new_x = player_x + dx;
-	new_y = player_y + dy;
+	new_x = data->player_pos.x + dx;
+	new_y = data->player_pos.y + dy;
 	if (data->map[new_y][new_x] == '0')
 	{
 		move_to_empty(data, new_x, new_y);
