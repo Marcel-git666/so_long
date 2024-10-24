@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/22 19:21:00 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/24 21:09:52 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,29 @@
 int handle_keypress(int keycode, t_data *data)
 {
 	ft_printf("Key %d is pressed.\n", keycode);
+	if (data->game_won)  // If the game is over, exit on any key press
+	{
+		// data->game_over = 1;
+		mlx_loop_end(data->mlx_ptr);  // End the game loop
+		return (0);
+    }
 	if (keycode == ESC_KEY)
 	{
 		data->game_over = 1;
 		mlx_loop_end(data->mlx_ptr);
 		return (0);
 	}
-	if (keycode == UP_KEY && data->game_over == 0)
-		move_player(data, 0, -1);
-	else if (keycode == DOWN_KEY && data->game_over == 0)
-		move_player(data, 0, 1);
-	else if (keycode == LEFT_KEY && data->game_over == 0)
-		move_player(data, -1, 0 && data->game_over == 0);
-	else if (keycode == RIGHT_KEY && data->game_over == 0)
-		move_player(data, 1, 0);
+	if (!data->game_over)
+	{
+		if (keycode == UP_KEY)
+			move_player(data, 0, -1);
+		else if (keycode == DOWN_KEY)
+			move_player(data, 0, 1);
+		else if (keycode == LEFT_KEY)
+			move_player(data, -1, 0);
+		else if (keycode == RIGHT_KEY)
+			move_player(data, 1, 0);
+	}
 	return (0);
 }
 
@@ -52,6 +61,8 @@ void	init_player_position(t_data *data, char **map)
 	data->move_count = 0;
 	data->crate_count = 0;
 	data->game_over = 0;
+	data->game_won = 0;
+	data->needs_redraw = 1;
 	y = 0;
 	while (map[y])
 	{
@@ -102,22 +113,31 @@ void	init_graphics(t_data *data, char **map)
 	}
 	data->map = map;
 	init_player_position(data, map);
+	ft_printf("Graphics initialized.\n");
 }
 
-void free_sprites(t_data *data)
+void free_sprites(t_game *game)
 {
-	if (data->sprites.player)
-		mlx_destroy_image(data->mlx_ptr, data->sprites.player);
-	if (data->sprites.wall)
-		mlx_destroy_image(data->mlx_ptr, data->sprites.wall);
-	if (data->sprites.empty)
-		mlx_destroy_image(data->mlx_ptr, data->sprites.empty);
-	if (data->sprites.collectible)
-		mlx_destroy_image(data->mlx_ptr, data->sprites.collectible);
-	if (data->sprites.exit)
-		mlx_destroy_image(data->mlx_ptr, data->sprites.exit);
-	if (data->sprites.free_exit)
-		mlx_destroy_image(data->mlx_ptr, data->sprites.free_exit);
+	ft_printf("Deestroying images...\n");
+	if (game->sprites->player)
+	{
+		ft_printf("Destroying image player.\n");
+		mlx_destroy_image(game->data.mlx_ptr, game->sprites->player);
+	}
+	if (game->sprites->wall)
+	{
+		mlx_destroy_image(game->data.mlx_ptr, game->sprites->wall);
+		ft_printf("Destroying image wall.\n");
+	}
+	if (game->sprites->empty)
+		mlx_destroy_image(game->data.mlx_ptr, game->sprites->empty);
+	if (game->sprites->collectible)
+		mlx_destroy_image(game->data.mlx_ptr, game->sprites->collectible);
+	if (game->sprites->exit)
+		mlx_destroy_image(game->data.mlx_ptr, game->sprites->exit);
+	if (game->sprites->free_exit)
+		mlx_destroy_image(game->data.mlx_ptr, game->sprites->free_exit);
+	free(game->sprites);
 }
 
 void free_map(char **map)
@@ -135,7 +155,8 @@ void free_map(char **map)
 
 void	deinit(char **map, char *file_content, t_game *game)
 {
-	free_sprites(&game->data);
+	ft_printf("Inside deinit function.\n");
+	free_sprites(game);
 	free_map(map);
 	if (file_content)
 		free(file_content);
@@ -143,4 +164,5 @@ void	deinit(char **map, char *file_content, t_game *game)
 		mlx_destroy_window(game->data.mlx_ptr, game->data.win_ptr);
 	if (game->data.mlx_ptr)
 		mlx_destroy_display(game->data.mlx_ptr);
+	free(game);
 }

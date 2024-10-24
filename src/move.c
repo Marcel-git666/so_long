@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:43:33 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/22 16:44:48 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/24 20:46:39 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,8 @@ void	finish_the_game(t_data *data)
 {
 	ft_printf("Finish the game called.\n");
 	data->game_over = 1;
-	// Clear the screen and draw "Game Over" text with the move count
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	// Show "Game Over" and the final score
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 200, 200, 0xFFFFFF, "Game Over!");
-
-	// Convert the move count to string and show the final score
-	char *score_str = ft_itoa(data->move_count);
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 200, 250, 0xFFFFFF, "Your Score:");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 320, 250, 0xFFFFFF, score_str);
-
-	// Free the score string
-	free(score_str);
-
-	// Now keep the game running, waiting for ESC or window close
-	mlx_hook(data->win_ptr, 2, 1L << 0, handle_keypress, data);  // Hook for keypress events
-	mlx_hook(data->win_ptr, DESTROY_NOTIFY, 0, handle_exit, data);  // Hook for window close
+	data->game_won = 1;
+	data->needs_redraw = 1;
 }
 
 void	move_player(t_data *data, int dx, int dy)
@@ -80,6 +66,7 @@ void	move_player(t_data *data, int dx, int dy)
 	{
 		move_to_empty(data, new_x, new_y);
 		data->move_count++;
+		data->needs_redraw = 1;
 	}
 	else if (data->map[new_y][new_x] == 'C'
 		&& (data->map[new_y + dy][new_x + dx] == '0'
@@ -88,10 +75,12 @@ void	move_player(t_data *data, int dx, int dy)
 		move_to_empty(data, new_x, new_y);
 		move_crate(data, new_x + dx, new_y + dy);
 		data->move_count++;
+		data->needs_redraw = 1;
 	}
 	if (data->map[new_y][new_x] == 'E' && data->crate_count == 0)
 	{
 		move_to_empty(data, new_x, new_y);
 		finish_the_game(data);
+		data->needs_redraw = 0;
 	}
 }

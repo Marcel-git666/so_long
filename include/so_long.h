@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/19 21:23:57 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/24 20:36:30 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ typedef struct s_data
 	int			move_count;
 	char		**map;
 	int			crate_count;
-	t_sprites	sprites;
 	int			game_over;
+	int			game_won;
+	int			needs_redraw;
 }				t_data;
 
 typedef struct s_dimension
@@ -69,7 +70,7 @@ typedef struct s_dimension
 typedef struct s_game
 {
 	t_data		data;
-	t_sprites	sprites;
+	t_sprites	*sprites;
 }		t_game;
 
 int			validate_map(char **map);
@@ -77,11 +78,11 @@ int			create_map(char *file_content, char ***map);
 void		init_graphics(t_data *data, char **map);
 int			handle_keypress(int keycode, t_data *data);
 int			handle_exit(t_data *data);
-void		draw_map(char **map, t_data *data, t_sprites sprites);
+void		draw_map(t_game *game);
 void		move_player(t_data *data, int dx, int dy);
 void		deinit(char **map, char *file_content, t_game *game);
-void		game_loop(t_game *game);
-t_sprites	load_sprites(void *mlx_ptr);
+int			game_loop(t_game *game);
+t_sprites	*load_sprites(void *mlx_ptr);
 void		show_move_count(t_data *data);
 
 #endif
