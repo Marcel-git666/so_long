@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:03:34 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/26 21:53:48 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/26 21:59:00 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,11 @@ void draw_foreground(t_game *game)
             if (game->data.map[pos.y][pos.x] == 'P') {
                 // Get animated player sprite
                 img = get_player_image(game, game->data.last_direction, game->data.frame);
-				ft_printf("Position[%d, %d]: getting player image.\n", pos.x, pos.y);
+				// ft_printf("Position[%d, %d]: getting player image.\n", pos.x, pos.y);
             } else {
                 // Get other sprites for non-player tiles
                 img = get_sprite_image(&game->data, game->data.map[pos.y][pos.x], game->sprites);
-				ft_printf("Position[%d, %d]: getting %c image.\n", pos.x, pos.y, game->data.map[pos.y][pos.x]);
+				// ft_printf("Position[%d, %d]: getting %c image.\n", pos.x, pos.y, game->data.map[pos.y][pos.x]);
             }
             if (img) {
                 mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
