@@ -1,5 +1,5 @@
 /* XPM */
-static char *player[] = {
+static char *player_left_walk[] = {
 /* columns rows colors chars-per-pixel */
 "64 64 153 2 ",
 "   c None",
