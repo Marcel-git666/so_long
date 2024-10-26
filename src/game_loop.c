@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 20:12:31 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/24 21:03:53 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/26 18:38:18 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	update_game(t_game *game)
     }
 	if (game->data.needs_redraw)
 	{
-		draw_map(game);
+		draw_foreground(game);
 		game->data.needs_redraw = 0;
 	}
 	show_move_count(&game->data);

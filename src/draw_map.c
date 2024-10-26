@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:03:34 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/24 20:29:28 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/26 18:50:35 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ t_sprites	*load_sprites(void *mlx_ptr)
 	t_sprites		*sprites;
 	t_dimension		dim;
 
+	ft_printf("Loading sprites....\n");
 	sprites = malloc(sizeof(t_sprites));
 	if (!sprites)
 	{
 		write(2, "Error: Failed to allocate memory for sprites\n", 46);
 		exit(1);
 	}
+	ft_printf("Memory for sprites allocated.\n");
 	sprites->player = mlx_xpm_file_to_image(mlx_ptr,
 			"sprites/player.xpm", &dim.width, &dim.height);
 	sprites->wall = mlx_xpm_file_to_image(mlx_ptr,
@@ -84,9 +86,6 @@ void	draw_map(t_game *game)
 	t_point		pos;
 	void		*img;
 
-	ft_printf("Trying to draw a map.\n");
-	ft_printf("mlx_ptr: %p\n", game->data.mlx_ptr);
-	ft_printf("win_ptr: %p\n", game->data.win_ptr);
 	pos.y = 0;
 	img = NULL;
 	while (game->data.map[pos.y])
@@ -104,19 +103,12 @@ void	draw_map(t_game *game)
 					game->data.map[pos.y][pos.x], pos.x, pos.y);
 				continue;
 			}
-			// if (!img || !game->data.mlx_ptr || !game->data.win_ptr)
-			// {
-			// 	ft_printf("Invalid pointer: img = %p, mlx_ptr = %p, win_ptr = %p\n",
-			// 		img, game->data.mlx_ptr, game->data.win_ptr);
-			// 	return;  // Skip drawing to avoid a crash
-			// }
 			if (img)
 			{
 				if (!game->data.mlx_ptr)
 					ft_printf("Error: mlx_ptr is NULL\n");
 				if (!game->data.win_ptr)
 					ft_printf("Error: win_ptr is NULL\n");
-				// ft_printf("Putting image to mlx_ptr: %p\n", game->data.mlx_ptr);
 				if (game->data.mlx_ptr && game->data.win_ptr && img)
 				{
 					mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
@@ -133,4 +125,45 @@ void	draw_map(t_game *game)
 		pos.y++;
 	}
 	ft_printf("Finished drawing a map.\n");
+}
+void draw_background(t_game *game) {
+    t_point pos;
+    void *img;
+
+    pos.y = 0;
+    while (game->data.map[pos.y]) {
+        pos.x = 0;
+        while (game->data.map[pos.y][pos.x]) {
+            if (game->data.map[pos.y][pos.x] == '1')  // Assuming '1' is wall
+                img = game->sprites->wall;
+            else
+                img = game->sprites->empty;  // '0' or empty spaces
+
+            mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
+                                    img, pos.x * TILE_SIZE, pos.y * TILE_SIZE);
+            pos.x++;
+        }
+        pos.y++;
+    }
+}
+
+void draw_foreground(t_game *game)
+{
+    t_point pos;
+    void *img;
+
+    pos.y = 0;
+    while (game->data.map[pos.y]) {
+        pos.x = 0;
+        while (game->data.map[pos.y][pos.x]) {
+            img = get_sprite_image(&game->data, game->data.map[pos.y][pos.x], game->sprites);
+
+            if (img && (game->data.map[pos.y][pos.x] != '1' && game->data.map[pos.y][pos.x] != '0')) {
+                mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
+                                        img, pos.x * TILE_SIZE, pos.y * TILE_SIZE);
+            }
+            pos.x++;
+        }
+        pos.y++;
+    }
 }

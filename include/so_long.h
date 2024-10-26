@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/24 20:36:30 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/26 18:46:57 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,11 @@ typedef struct s_game
 
 int			validate_map(char **map);
 int			create_map(char *file_content, char ***map);
-void		init_graphics(t_data *data, char **map);
+void		init_graphics(t_game *game);
 int			handle_keypress(int keycode, t_data *data);
 int			handle_exit(t_data *data);
-void		draw_map(t_game *game);
+void		draw_background(t_game *game);
+void		draw_foreground(t_game *game);
 void		move_player(t_data *data, int dx, int dy);
 void		deinit(char **map, char *file_content, t_game *game);
 int			game_loop(t_game *game);
