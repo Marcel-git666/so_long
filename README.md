@@ -1,12 +1,11 @@
-My version of Sokoban adopted to project from 42 Prague.
-You can use your own maps to play the game.
+# My Sokoban Game (42 Prague Project)
 
-Asset pack was created by DANI MACCARI. 
-https://dani-maccari.itch.io/sokoban-tileset
+This is my version of Sokoban, adapted for a project from 42 Prague. You can use your own maps to play the game.
 
-Player character was created by chatGPT.
+## Credits
 
-Game example:
+Asset pack created by [1001.com](https://1001.com), licensed under [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
 
-https://github.com/user-attachments/assets/50efe35e-36a6-4c73-9d03-ad45d5370823
+## Game Example
 
+(*In-game video example coming soon!*)
