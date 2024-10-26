@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/26 18:46:57 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/26 21:26:34 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct s_data
 	int			game_over;
 	int			game_won;
 	int			needs_redraw;
+	char		last_direction;
+	int			frame;
 }				t_data;
 
 typedef struct s_dimension
@@ -67,10 +69,24 @@ typedef struct s_dimension
 	int		height;
 }		t_dimension;
 
+typedef struct s_player_sprites {
+    void *up_stand;
+    void *up_walk;
+    void *up_walk2;
+    void *down_stand;
+    void *down_walk;
+    void *down_walk2;
+    void *left_stand;
+    void *left_walk;
+    void *right_stand;
+    void *right_walk;
+}		t_player_sprites;
+
 typedef struct s_game
 {
 	t_data		data;
 	t_sprites	*sprites;
+	t_player_sprites *player_sprites;
 }		t_game;
 
 int			validate_map(char **map);
@@ -84,6 +100,8 @@ void		move_player(t_data *data, int dx, int dy);
 void		deinit(char **map, char *file_content, t_game *game);
 int			game_loop(t_game *game);
 t_sprites	*load_sprites(void *mlx_ptr);
+t_player_sprites *load_player_sprites(void *mlx_ptr);
 void		show_move_count(t_data *data);
+void		animate_player(t_game *game, char direction, int frame);
 
 #endif

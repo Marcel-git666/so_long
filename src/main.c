@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/26 19:06:42 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/26 21:50:00 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int main(int argc, char **argv)
 	game->data.map = map;
 	init_graphics(game);
 	game->sprites = load_sprites(game->data.mlx_ptr);
+	game->player_sprites = load_player_sprites(game->data.mlx_ptr);
 	ft_printf("Sprites loaded.\n");
 	ft_printf("mlx_ptr: %p\n", game->data.mlx_ptr);
 	ft_printf("Ready to draw background.\n");

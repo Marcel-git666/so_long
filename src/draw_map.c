@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:03:34 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/26 19:14:13 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/26 21:53:48 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,27 @@
 #include "so_long.h"
 #include "libft.h"
 
-t_sprites	*load_sprites(void *mlx_ptr)
+void	*get_player_image(t_game *game, char direction, int frame)
 {
-	t_sprites		*sprites;
-	t_dimension		dim;
+    void *current_sprite = NULL;
 
-	ft_printf("Loading sprites....\n");
-	sprites = malloc(sizeof(t_sprites));
-	if (!sprites)
-	{
-		write(2, "Error: Failed to allocate memory for sprites\n", 46);
-		exit(1);
-	}
-	ft_printf("Memory for sprites allocated.\n");
-	sprites->player = mlx_xpm_file_to_image(mlx_ptr,
-			"sprites/player.xpm", &dim.width, &dim.height);
-	ft_printf("Player image: %p\n", sprites->player);
-	sprites->wall = mlx_xpm_file_to_image(mlx_ptr,
-			"sprites/wall.xpm", &dim.width, &dim.height);
-	if (!sprites->wall)
-		ft_printf("Error: Failed to load wall sprite\n");
-	else
-		ft_printf("Wall image: %p, width: %d, height: %d\n", sprites->wall, dim.width, dim.height);
+    if (direction == 'U') {  // Up
+        if (frame == 1 || frame == 4) current_sprite = game->player_sprites->up_stand;
+        else if (frame == 2 || frame == 5) current_sprite = game->player_sprites->up_walk;
+        else if (frame == 3 || frame == 6) current_sprite = game->player_sprites->up_walk2;
+    } else if (direction == 'D') {  // Down
+        if (frame == 1 || frame == 4) current_sprite = game->player_sprites->down_stand;
+        else if (frame == 2 || frame == 5) current_sprite = game->player_sprites->down_walk;
+        else if (frame == 3 || frame == 6) current_sprite = game->player_sprites->down_walk2;
+    } else if (direction == 'L') {  // Left
+        if (frame % 2 == 1) current_sprite = game->player_sprites->left_stand;
+        else current_sprite = game->player_sprites->left_walk;
+    } else if (direction == 'R') {  // Right
+        if (frame % 2 == 1) current_sprite = game->player_sprites->right_stand;
+        else current_sprite = game->player_sprites->right_walk;
+    }
 
-	sprites->empty = mlx_xpm_file_to_image(mlx_ptr,
-			"sprites/empty.xpm", &dim.width, &dim.height);
-	sprites->collectible = mlx_xpm_file_to_image(mlx_ptr,
-			"sprites/crate.xpm", &dim.width, &dim.height);
-	sprites->exit = mlx_xpm_file_to_image(mlx_ptr,
-			"sprites/exit.xpm", &dim.width, &dim.height);
-	sprites->free_exit = mlx_xpm_file_to_image(mlx_ptr,
-			"sprites/free_exit.xpm", &dim.width, &dim.height);
-	if (!sprites->player || !sprites->wall || !sprites->empty
-		|| !sprites->collectible || !sprites->exit || !sprites->free_exit)
-	{
-		write(2, "Error: Failed to load sprites\n", 30);
-		free(sprites);
-		exit(1);
-	}
-
-	ft_printf("Wall image: %p\n", sprites->wall);
-	ft_printf("Empty image: %p\n", sprites->empty);
-	ft_printf("Collectible image: %p\n", sprites->collectible);
-	ft_printf("Exit image: %p\n", sprites->exit);
-	ft_printf("Free exit image: %p\n", sprites->free_exit);
-
-	return (sprites);
+    return current_sprite;
 }
 
 static void	*get_sprite_image(t_data *data, char tile, t_sprites *sprites)
@@ -108,14 +83,23 @@ void draw_foreground(t_game *game)
     t_point pos;
     void *img;
 
+	ft_printf("Ready to draw foreground.\n");
     pos.y = 0;
-    while (game->data.map[pos.y]) {
+    while (game->data.map[pos.y])
+	{
         pos.x = 0;
-        while (game->data.map[pos.y][pos.x]) {
-            img = get_sprite_image(&game->data, game->data.map[pos.y][pos.x], game->sprites);
-
-            if (img && (game->data.map[pos.y][pos.x] != '1'))
-			{
+        while (game->data.map[pos.y][pos.x])
+		{
+            if (game->data.map[pos.y][pos.x] == 'P') {
+                // Get animated player sprite
+                img = get_player_image(game, game->data.last_direction, game->data.frame);
+				ft_printf("Position[%d, %d]: getting player image.\n", pos.x, pos.y);
+            } else {
+                // Get other sprites for non-player tiles
+                img = get_sprite_image(&game->data, game->data.map[pos.y][pos.x], game->sprites);
+				ft_printf("Position[%d, %d]: getting %c image.\n", pos.x, pos.y, game->data.map[pos.y][pos.x]);
+            }
+            if (img) {
                 mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
                                         img, pos.x * TILE_SIZE, pos.y * TILE_SIZE);
             }
