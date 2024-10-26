@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/26 18:48:01 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/26 19:05:26 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,17 @@ void	init_graphics(t_game *game)
 	int		window_height;
 	int		map_height;
 
+	ft_printf("Graphics starts to init.\n");
 	game->data.mlx_ptr = mlx_init();
 	if (!game->data.mlx_ptr)
 	{
 		write(2, "Error: Unable to initialize MiniLibX\n", 37);
 		exit(1);
 	}
+	if (!game->data.map) {
+        write(2, "Error: Map is NULL.\n", 20);
+        exit(1);
+    }
 	map_height = 0;
 	while (game->data.map[map_height])
 		map_height++;
@@ -112,8 +117,6 @@ void	init_graphics(t_game *game)
 		exit(1);
 	}
 	init_player_position(&game->data, game->data.map);
-	ft_printf("Ready to draw background.\n");
-	draw_background(game);
 	ft_printf("Graphics initialized.\n");
 }
 

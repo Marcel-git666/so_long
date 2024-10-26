@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:03:34 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/26 18:50:35 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/26 19:14:13 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_sprites	*load_sprites(void *mlx_ptr)
 	ft_printf("Memory for sprites allocated.\n");
 	sprites->player = mlx_xpm_file_to_image(mlx_ptr,
 			"sprites/player.xpm", &dim.width, &dim.height);
+	ft_printf("Player image: %p\n", sprites->player);
 	sprites->wall = mlx_xpm_file_to_image(mlx_ptr,
 			"sprites/wall.xpm", &dim.width, &dim.height);
 	if (!sprites->wall)
@@ -51,7 +52,7 @@ t_sprites	*load_sprites(void *mlx_ptr)
 		free(sprites);
 		exit(1);
 	}
-	ft_printf("Player image: %p\n", sprites->player);
+
 	ft_printf("Wall image: %p\n", sprites->wall);
 	ft_printf("Empty image: %p\n", sprites->empty);
 	ft_printf("Collectible image: %p\n", sprites->collectible);
@@ -81,57 +82,12 @@ static void	*get_sprite_image(t_data *data, char tile, t_sprites *sprites)
 	return (NULL);
 }
 
-void	draw_map(t_game *game)
-{
-	t_point		pos;
-	void		*img;
+void draw_background(t_game *game) {
+	t_point pos;
+	void *img;
 
 	pos.y = 0;
-	img = NULL;
-	while (game->data.map[pos.y])
-	{
-		pos.x = 0;
-		while (game->data.map[pos.y][pos.x])
-		{
-			// ft_printf("xy: %d%d\n", pos.x, pos.y);
-			img = get_sprite_image(&game->data, game->data.map[pos.y][pos.x], game->sprites);
-			// ft_printf("img: %p\n", img);
-			// ft_printf("sprites->wall: %p\n", game->sprites->wall);
-			if (img == NULL)
-			{
-				ft_printf("Error: Failed to load sprite for %c at (%d, %d)\n",
-					game->data.map[pos.y][pos.x], pos.x, pos.y);
-				continue;
-			}
-			if (img)
-			{
-				if (!game->data.mlx_ptr)
-					ft_printf("Error: mlx_ptr is NULL\n");
-				if (!game->data.win_ptr)
-					ft_printf("Error: win_ptr is NULL\n");
-				if (game->data.mlx_ptr && game->data.win_ptr && img)
-				{
-					mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
-						img, pos.x * TILE_SIZE, pos.y * TILE_SIZE);
-				}
-				else
-				{
-					ft_printf("Error: Invalid pointer detected. mlx_ptr: %p, win_ptr: %p, img: %p\n",
-						game->data.mlx_ptr, game->data.win_ptr, img);
-				}
-			}
-			pos.x++;
-		}
-		pos.y++;
-	}
-	ft_printf("Finished drawing a map.\n");
-}
-void draw_background(t_game *game) {
-    t_point pos;
-    void *img;
-
-    pos.y = 0;
-    while (game->data.map[pos.y]) {
+	while (game->data.map[pos.y]) {
         pos.x = 0;
         while (game->data.map[pos.y][pos.x]) {
             if (game->data.map[pos.y][pos.x] == '1')  // Assuming '1' is wall
@@ -158,7 +114,8 @@ void draw_foreground(t_game *game)
         while (game->data.map[pos.y][pos.x]) {
             img = get_sprite_image(&game->data, game->data.map[pos.y][pos.x], game->sprites);
 
-            if (img && (game->data.map[pos.y][pos.x] != '1' && game->data.map[pos.y][pos.x] != '0')) {
+            if (img && (game->data.map[pos.y][pos.x] != '1'))
+			{
                 mlx_put_image_to_window(game->data.mlx_ptr, game->data.win_ptr,
                                         img, pos.x * TILE_SIZE, pos.y * TILE_SIZE);
             }
