@@ -5,7 +5,7 @@ This is my version of Sokoban, adapted for a project from 42 Prague. You can use
 ## Credits
 
 Asset pack created by [1001.com](https://1001.com), licensed under [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
-https://opengameart.org/content/sokoban-100-tiles
+Assets sourced from [Sokoban 100+ Tiles on OpenGameArt](https://opengameart.org/content/sokoban-100-tiles).
 
 ## Game Example
 
