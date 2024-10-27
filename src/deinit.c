@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 20:23:13 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/26 21:57:38 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/27 12:11:15 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void free_sprites(t_game *game)
 {
 	ft_printf("Destroying images...\n");
-	
+
 	if (game->sprites->wall)
 	{
 		mlx_destroy_image(game->data.mlx_ptr, game->sprites->wall);
@@ -111,7 +111,9 @@ void	deinit(char **map, char *file_content, t_game *game)
 		free(file_content);
 	if (game->data.win_ptr)
 		mlx_destroy_window(game->data.mlx_ptr, game->data.win_ptr);
-	if (game->data.mlx_ptr)
-		mlx_destroy_display(game->data.mlx_ptr);
+	# ifndef __APPLE__
+		if (game->data.mlx_ptr)
+			mlx_destroy_display(game->data.mlx_ptr);
+	# endif
 	free(game);
 }

@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 20:12:31 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/26 21:31:53 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/10/27 12:12:25 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,17 @@ int handle_keypress(int keycode, t_data *data)
 	if (data->game_won)  // If the game is over, exit on any key press
 	{
 		// data->game_over = 1;
-		mlx_loop_end(data->mlx_ptr);  // End the game loop
+		#ifndef __APPLE__
+			mlx_loop_end(data->mlx_ptr);  // End the game loop
+		#endif
 		return (0);
     }
 	if (keycode == ESC_KEY)
 	{
 		data->game_over = 1;
-		mlx_loop_end(data->mlx_ptr);
+		#ifndef __APPLE__
+			mlx_loop_end(data->mlx_ptr);
+		#endif
 		return (0);
 	}
 	if (!data->game_over)
@@ -62,7 +66,9 @@ int handle_keypress(int keycode, t_data *data)
 int	handle_exit(t_data *data)
 {
 	data->game_over = 1;
-	mlx_loop_end(data->mlx_ptr);
+	#ifndef __APPLE__
+		mlx_loop_end(data->mlx_ptr);
+	#endif
 	return (0);
 }
 
