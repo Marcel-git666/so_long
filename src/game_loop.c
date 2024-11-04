@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 20:12:31 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/27 12:12:25 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/04 20:28:40 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 
 // Function to handle key press events
-int handle_keypress(int keycode, t_data *data)
+int	handle_keypress(int keycode, t_data *data)
 {
 	ft_printf("Key %d is pressed.\n", keycode);
 	if (data->game_won)  // If the game is over, exit on any key press
@@ -25,7 +25,7 @@ int handle_keypress(int keycode, t_data *data)
 			mlx_loop_end(data->mlx_ptr);  // End the game loop
 		#endif
 		return (0);
-    }
+	}
 	if (keycode == ESC_KEY)
 	{
 		data->game_over = 1;
@@ -74,25 +74,26 @@ int	handle_exit(t_data *data)
 
 int	update_game(t_game *game)
 {
+	char	*score_str;
+
 	if (game->data.game_over == 1)
-    {
+	{
 		game->data.needs_redraw = 1;
-        if (game->data.needs_redraw)
-        {
-            // Clear the screen and draw "Game Over" text with the move count
-            mlx_clear_window(game->data.mlx_ptr, game->data.win_ptr);
-            mlx_string_put(game->data.mlx_ptr, game->data.win_ptr, 200, 200, 0xFFFFFF, "Game Over!");
-
-            // Convert the move count to string and show the final score
-            char *score_str = ft_itoa(game->data.move_count);
-            mlx_string_put(game->data.mlx_ptr, game->data.win_ptr, 200, 250, 0xFFFFFF, "Your Score:");
-            mlx_string_put(game->data.mlx_ptr, game->data.win_ptr, 320, 250, 0xFFFFFF, score_str);
-
-            free(score_str);
-            game->data.needs_redraw = 0;  // Only draw once
-        }
-        return (0);  // Stop further updates but wait for ESC to exit
-    }
+		if (game->data.needs_redraw)
+		{
+			mlx_clear_window(game->data.mlx_ptr, game->data.win_ptr);
+			mlx_string_put(game->data.mlx_ptr, game->data.win_ptr,
+				200, 200, 0xFFFFFF, "Game Over!");
+			score_str = ft_itoa(game->data.move_count);
+			mlx_string_put(game->data.mlx_ptr, game->data.win_ptr,
+				200, 250, 0xFFFFFF, "Your Score:");
+			mlx_string_put(game->data.mlx_ptr, game->data.win_ptr,
+				320, 250, 0xFFFFFF, score_str);
+			free(score_str);
+			game->data.needs_redraw = 0;
+		}
+		return (0);
+	}
 	if (game->data.needs_redraw)
 	{
 		draw_foreground(game);

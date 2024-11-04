@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:03:34 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/26 21:59:00 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/04 20:35:28 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,49 @@
 
 void	*get_player_image(t_game *game, char direction, int frame)
 {
-    void *current_sprite = NULL;
+	void	*current_sprite;
 
-    if (direction == 'U') {  // Up
-        if (frame == 1 || frame == 4) current_sprite = game->player_sprites->up_stand;
-        else if (frame == 2 || frame == 5) current_sprite = game->player_sprites->up_walk;
-        else if (frame == 3 || frame == 6) current_sprite = game->player_sprites->up_walk2;
-    } else if (direction == 'D') {  // Down
-        if (frame == 1 || frame == 4) current_sprite = game->player_sprites->down_stand;
-        else if (frame == 2 || frame == 5) current_sprite = game->player_sprites->down_walk;
-        else if (frame == 3 || frame == 6) current_sprite = game->player_sprites->down_walk2;
-    } else if (direction == 'L') {  // Left
-        if (frame % 2 == 1) current_sprite = game->player_sprites->left_stand;
-        else current_sprite = game->player_sprites->left_walk;
-    } else if (direction == 'R') {  // Right
-        if (frame % 2 == 1) current_sprite = game->player_sprites->right_stand;
-        else current_sprite = game->player_sprites->right_walk;
-    }
-
-    return current_sprite;
+	current_sprite = NULL;
+	if (direction == 'U')
+	{
+		if (frame == 1 || frame == 4)
+			current_sprite = game->player_sprites->up_stand;
+		else
+			if (frame == 2 || frame == 5)
+				current_sprite = game->player_sprites->up_walk;
+		else
+			if (frame == 3 || frame == 6)
+				current_sprite = game->player_sprites->up_walk2;
+	}
+	else
+		if (direction == 'D')
+		{
+			if (frame == 1 || frame == 4)
+				current_sprite = game->player_sprites->down_stand;
+			else
+				if (frame == 2 || frame == 5)
+					current_sprite = game->player_sprites->down_walk;
+			else
+				if (frame == 3 || frame == 6)
+					current_sprite = game->player_sprites->down_walk2;
+		}
+	else
+		if (direction == 'L')
+		{
+			if (frame % 2 == 1)
+				current_sprite = game->player_sprites->left_stand;
+			else
+				current_sprite = game->player_sprites->left_walk;
+		}
+	else
+		if (direction == 'R')
+		{
+			if (frame % 2 == 1)
+				current_sprite = game->player_sprites->right_stand;
+			else
+				current_sprite = game->player_sprites->right_walk;
+		}
+	return (current_sprite);
 }
 
 static void	*get_sprite_image(t_data *data, char tile, t_sprites *sprites)

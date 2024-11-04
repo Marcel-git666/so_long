@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 20:23:13 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/27 12:11:15 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/04 20:21:06 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "so_long.h"
 #include "libft.h"
 
-void free_sprites(t_game *game)
+void	free_sprites(t_game *game)
 {
 	ft_printf("Destroying images...\n");
 
@@ -34,61 +34,34 @@ void free_sprites(t_game *game)
 	free(game->sprites);
 }
 
-void free_player_sprites(t_game *game)
+void	free_player_sprites(t_game *game)
 {
 	ft_printf("Destroying player sprites...\n");
 	if (game->player_sprites->up_stand)
-	{
 		mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->up_stand);
-		ft_printf("Destroyed up_stand sprite.\n");
-	}
 	if (game->player_sprites->up_walk)
-	{
-        mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->up_walk);
-        ft_printf("Destroyed up_walk sprite.\n");
-    }
-    if (game->player_sprites->up_walk2)
-	{
-        mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->up_walk2);
-        ft_printf("Destroyed up_walk2 sprite.\n");
-    }
-    if (game->player_sprites->down_stand)
-	{
-        mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->down_stand);
-        ft_printf("Destroyed down_stand sprite.\n");
-    }
-    if (game->player_sprites->down_walk)
-	{
-        mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->down_walk);
-        ft_printf("Destroyed down_walk sprite.\n");
-    }
-    if (game->player_sprites->down_walk2) {
-        mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->down_walk2);
-        ft_printf("Destroyed down_walk2 sprite.\n");
-    }
-    if (game->player_sprites->left_stand)
-	{
-        mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->left_stand);
-        ft_printf("Destroyed left_stand sprite.\n");
-    }
-    if (game->player_sprites->left_walk) {
-        mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->left_walk);
-        ft_printf("Destroyed left_walk sprite.\n");
-    }
-
-    if (game->player_sprites->right_stand) {
-        mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->right_stand);
-        ft_printf("Destroyed right_stand sprite.\n");
-    }
-    if (game->player_sprites->right_walk) {
-        mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->right_walk);
-        ft_printf("Destroyed right_walk sprite.\n");
-    }
+		mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->up_walk);
+	if (game->player_sprites->up_walk2)
+		mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->up_walk2);
+	if (game->player_sprites->down_stand)
+		mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->down_stand);
+	if (game->player_sprites->down_walk)
+		mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->down_walk);
+	if (game->player_sprites->down_walk2)
+		mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->down_walk2);
+	if (game->player_sprites->left_stand)
+		mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->left_stand);
+	if (game->player_sprites->left_walk)
+		mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->left_walk);
+	if (game->player_sprites->right_stand)
+		mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->right_stand);
+	if (game->player_sprites->right_walk)
+		mlx_destroy_image(game->data.mlx_ptr, game->player_sprites->right_walk);
 	free(game->player_sprites);
 	ft_printf("Player sprites freed.\n");
 }
 
-void free_map(char **map)
+void	free_map(char **map)
 {
 	int		i;
 
