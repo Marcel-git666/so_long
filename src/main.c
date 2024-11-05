@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 14:12:58 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/05 21:02:26 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static int	initialize_game(t_game **game)
 	*game = (t_game *)malloc(sizeof(t_game));
 	if (!*game)
 		return (write(2, "Error: Memory allocation failed for game.\n", 42), 0);
+	(*game)->sprites = NULL;
+	(*game)->player_sprites = NULL;
 	return (1);
 }
 
@@ -55,7 +57,7 @@ int	main(int argc, char **argv)
 	if (!create_map(file_content, &map))
 		return (free(file_content), free(game), 1);
 	if (!validate_map(map))
-		return (deinit(map, file_content, game), 1);
+		return (free_map(map), free(file_content), free(game), 1);
 	ft_printf("Your map is valid. Good job!\n");
 	game->data.map = map;
 	init_graphics(game);

@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:55:59 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 13:01:51 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/05 21:03:26 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "so_long.h"
 #include "libft.h"
 
-void	load_up_sprites(t_player_sprites *player_sprites, void *mlx_ptr,
+void	load_up_sprites(t_p_sprites *player_sprites, void *mlx_ptr,
 			t_dimension *dim)
 {
 	player_sprites->up_stand = load_sprite(mlx_ptr,
@@ -32,7 +32,7 @@ void	load_up_sprites(t_player_sprites *player_sprites, void *mlx_ptr,
 	}
 }
 
-void	load_down_sprites(t_player_sprites *player_sprites, void *mlx_ptr,
+void	load_down_sprites(t_p_sprites *player_sprites, void *mlx_ptr,
 		t_dimension *dim)
 {
 	player_sprites->down_stand = load_sprite(mlx_ptr,
@@ -50,7 +50,7 @@ void	load_down_sprites(t_player_sprites *player_sprites, void *mlx_ptr,
 	}
 }
 
-void	load_left_sprites(t_player_sprites *player_sprites, void *mlx_ptr,
+void	load_left_sprites(t_p_sprites *player_sprites, void *mlx_ptr,
 	t_dimension *dim)
 {
 	player_sprites->left_stand = load_sprite(mlx_ptr,
@@ -65,7 +65,7 @@ void	load_left_sprites(t_player_sprites *player_sprites, void *mlx_ptr,
 	}
 }
 
-void	load_right_sprites(t_player_sprites *player_sprites, void *mlx_ptr,
+void	load_right_sprites(t_p_sprites *player_sprites, void *mlx_ptr,
 	t_dimension *dim)
 {
 	player_sprites->right_stand = load_sprite(mlx_ptr,
@@ -80,12 +80,12 @@ void	load_right_sprites(t_player_sprites *player_sprites, void *mlx_ptr,
 	}
 }
 
-t_player_sprites	*load_player_sprites(void *mlx_ptr)
+t_p_sprites	*load_player_sprites(void *mlx_ptr)
 {
-	t_player_sprites	*player_sprites;
-	t_dimension			dim;
+	t_p_sprites	*player_sprites;
+	t_dimension	dim;
 
-	player_sprites = malloc(sizeof(t_player_sprites));
+	player_sprites = malloc(sizeof(t_p_sprites));
 	if (!player_sprites)
 	{
 		write(2, "Error: Failed to allocate memory for player sprites\n", 52);

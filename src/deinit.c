@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 20:23:13 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 14:19:36 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/05 20:45:26 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 void	free_sprites(t_game *game)
 {
 	ft_printf("Destroying images...\n");
+	if (!game->sprites)
+		return ;
 	if (game->sprites->wall)
 		mlx_destroy_image(game->data.mlx_ptr, game->sprites->wall);
 	if (game->sprites->empty)

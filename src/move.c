@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:43:33 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 12:44:33 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:29:14 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,6 @@ static void	handle_move_crate(t_data *data, int new_x, int new_y)
 		data->map[crate_y][crate_x] = 'C';
 	data->move_count++;
 	data->needs_redraw = 1;
-}
-
-void	show_move_count(t_data *data)
-{
-	char	*move_str;
-
-	move_str = ft_itoa(data->move_count);
-	if (!move_str)
-		return ;
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 30, 40, 0x8B0000, move_str);
-	free(move_str);
 }
 
 static void	handle_exit_condition(t_data *data, int new_x, int new_y)

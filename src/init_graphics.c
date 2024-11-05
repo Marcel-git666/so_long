@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 11:38:29 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/05 20:30:13 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "so_long.h"
 #include "libft.h"
 
-static void	calculate_map_dimensions(t_data *data, int *width, int *height)
+void	calculate_map_dimensions(t_data *data, int *width, int *height)
 {
 	int		map_height;
 
