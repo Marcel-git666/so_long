@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 20:12:31 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/04 20:28:40 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:04:15 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,89 +14,37 @@
 #include "so_long.h"
 #include "libft.h"
 
-// Function to handle key press events
-int	handle_keypress(int keycode, t_data *data)
+static void	display_game_over(t_data *data)
 {
-	ft_printf("Key %d is pressed.\n", keycode);
-	if (data->game_won)  // If the game is over, exit on any key press
-	{
-		// data->game_over = 1;
-		#ifndef __APPLE__
-			mlx_loop_end(data->mlx_ptr);  // End the game loop
-		#endif
-		return (0);
-	}
-	if (keycode == ESC_KEY)
-	{
-		data->game_over = 1;
-		#ifndef __APPLE__
-			mlx_loop_end(data->mlx_ptr);
-		#endif
-		return (0);
-	}
-	if (!data->game_over)
-	{
-		if (keycode == UP_KEY)
-		{
-			move_player(data, 0, -1);
-			data->last_direction = 'U';
-		}
-		else if (keycode == DOWN_KEY)
-		{
-			move_player(data, 0, 1);
-			data->last_direction = 'D';
-		}
-		else if (keycode == LEFT_KEY)
-		{
-			move_player(data, -1, 0);
-			data->last_direction = 'L';
-		}
-		else if (keycode == RIGHT_KEY)
-		{
-			move_player(data, 1, 0);
-			data->last_direction = 'R';
-		}
-		data->frame = (data->frame % 6) + 1;
-		data->needs_redraw = 1;
-	}
-	return (0);
-}
+	char	*score_str;
 
-// Function to handle window close (cross click)
-int	handle_exit(t_data *data)
-{
-	data->game_over = 1;
-	#ifndef __APPLE__
-		mlx_loop_end(data->mlx_ptr);
-	#endif
-	return (0);
+	mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 200, 200, 0xFFFFFF,
+		"Game Over!");
+	score_str = ft_itoa(data->move_count);
+	if (score_str)
+	{
+		mlx_string_put(data->mlx_ptr, data->win_ptr, 200, 250, 0xFFFFFF,
+			"Your Score:");
+		mlx_string_put(data->mlx_ptr, data->win_ptr, 320, 250, 0xFFFFFF,
+			score_str);
+		free(score_str);
+	}
+	data->needs_redraw = 0;
 }
 
 int	update_game(t_game *game)
 {
-	char	*score_str;
-
 	if (game->data.game_over == 1)
 	{
 		game->data.needs_redraw = 1;
 		if (game->data.needs_redraw)
-		{
-			mlx_clear_window(game->data.mlx_ptr, game->data.win_ptr);
-			mlx_string_put(game->data.mlx_ptr, game->data.win_ptr,
-				200, 200, 0xFFFFFF, "Game Over!");
-			score_str = ft_itoa(game->data.move_count);
-			mlx_string_put(game->data.mlx_ptr, game->data.win_ptr,
-				200, 250, 0xFFFFFF, "Your Score:");
-			mlx_string_put(game->data.mlx_ptr, game->data.win_ptr,
-				320, 250, 0xFFFFFF, score_str);
-			free(score_str);
-			game->data.needs_redraw = 0;
-		}
+			display_game_over(&game->data);
 		return (0);
 	}
 	if (game->data.needs_redraw)
 	{
-		draw_foreground(game);
+		draw_map(game);
 		game->data.needs_redraw = 0;
 	}
 	show_move_count(&game->data);

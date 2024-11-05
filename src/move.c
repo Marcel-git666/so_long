@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:43:33 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/24 20:46:39 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/05 12:44:33 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,33 @@
 #include "so_long.h"
 #include "libft.h"
 
-void	move_to_empty(t_data *data, int new_x, int new_y)
+static void	handle_move_to_empty(t_data *data, int new_x, int new_y)
 {
-	int		player_x;
-	int		player_y;
-
-	player_x = data->player_pos.x;
-	player_y = data->player_pos.y;
-	data->map[player_y][player_x] = '0';
+	data->map[data->player_pos.y][data->player_pos.x] = '0';
 	data->map[new_y][new_x] = 'P';
 	data->player_pos.x = new_x;
 	data->player_pos.y = new_y;
-	ft_printf("Player has moved..\n");
+	data->move_count++;
+	data->needs_redraw = 1;
 }
 
-void	move_crate(t_data *data, int new_x, int new_y)
+static void	handle_move_crate(t_data *data, int new_x, int new_y)
 {
-	if (data->map[new_y][new_x] == 'E')
+	int		crate_x;
+	int		crate_y;
+
+	crate_x = new_x + (new_x - data->player_pos.x);
+	crate_y = new_y + (new_y - data->player_pos.y);
+	data->map[data->player_pos.y][data->player_pos.x] = '0';
+	data->map[new_y][new_x] = 'P';
+	data->player_pos.x = new_x;
+	data->player_pos.y = new_y;
+	if (data->map[crate_y][crate_x] == 'E')
 		data->crate_count--;
 	else
-		data->map[new_y][new_x] = 'C';
+		data->map[crate_y][crate_x] = 'C';
+	data->move_count++;
+	data->needs_redraw = 1;
 }
 
 void	show_move_count(t_data *data)
@@ -47,12 +54,19 @@ void	show_move_count(t_data *data)
 	free(move_str);
 }
 
-void	finish_the_game(t_data *data)
+static void	handle_exit_condition(t_data *data, int new_x, int new_y)
 {
-	ft_printf("Finish the game called.\n");
-	data->game_over = 1;
-	data->game_won = 1;
-	data->needs_redraw = 1;
+	data->map[data->player_pos.y][data->player_pos.x] = '0';
+	data->map[new_y][new_x] = 'P';
+	data->player_pos.x = new_x;
+	data->player_pos.y = new_y;
+	if (data->crate_count == 0)
+	{
+		ft_printf("Finish the game called.\n");
+		data->game_over = 1;
+		data->game_won = 1;
+		data->needs_redraw = 0;
+	}
 }
 
 void	move_player(t_data *data, int dx, int dy)
@@ -63,24 +77,11 @@ void	move_player(t_data *data, int dx, int dy)
 	new_x = data->player_pos.x + dx;
 	new_y = data->player_pos.y + dy;
 	if (data->map[new_y][new_x] == '0')
-	{
-		move_to_empty(data, new_x, new_y);
-		data->move_count++;
-		data->needs_redraw = 1;
-	}
+		handle_move_to_empty(data, new_x, new_y);
 	else if (data->map[new_y][new_x] == 'C'
 		&& (data->map[new_y + dy][new_x + dx] == '0'
 		|| data->map[new_y + dy][new_x + dx] == 'E'))
-	{
-		move_to_empty(data, new_x, new_y);
-		move_crate(data, new_x + dx, new_y + dy);
-		data->move_count++;
-		data->needs_redraw = 1;
-	}
-	if (data->map[new_y][new_x] == 'E' && data->crate_count == 0)
-	{
-		move_to_empty(data, new_x, new_y);
-		finish_the_game(data);
-		data->needs_redraw = 0;
-	}
+		handle_move_crate(data, new_x, new_y);
+	else if (data->map[new_y][new_x] == 'E')
+		handle_exit_condition(data, new_x, new_y);
 }

@@ -6,33 +6,23 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 16:05:35 by mmravec           #+#    #+#              #
-#    Updated: 2024/10/26 20:31:45 by mmravec          ###   ########.fr        #
+#    Updated: 2024/11/05 14:07:55 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
-# Check for macOS or Linux and set CFLAGS and LIBS accordingly
-UNAME_S := $(shell uname -s)
-
-ifeq ($(UNAME_S), Darwin)
-	CC = gcc-14
-	CFLAGS = -Wall -Werror -Wextra -Iinclude -g -D__APPLE__ -DGL_SILENCE_DEPRECATION
-	MLX_DIR = minilibx_macos
-	FRAMEWORKS = -framework OpenGL -framework AppKit
-	LIBS = -L$(MLX_DIR) -lmlx $(FRAMEWORKS)
-else
-	CC = cc
-	CFLAGS = -Wall -Werror -Wextra -Iinclude -g -D__linux__
-	MLX_DIR = minilibx_linux
-	LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
-endif
+CC = cc
+CFLAGS = -Wall -Werror -Wextra -Iinclude -g
+MLX_DIR = minilibx_linux
+LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 # Source files
 SRCS_DIR = src
-SRCS = $(SRCS_DIR)/main.c $(SRCS_DIR)/map.c $(SRCS_DIR)/graphics_init.c \
+SRCS = $(SRCS_DIR)/main.c $(SRCS_DIR)/map.c $(SRCS_DIR)/init_graphics.c \
 	$(SRCS_DIR)/draw_map.c $(SRCS_DIR)/move.c $(SRCS_DIR)/game_loop.c \
-	$(SRCS_DIR)/sprites.c $(SRCS_DIR)/deinit.c
+	$(SRCS_DIR)/sprites.c $(SRCS_DIR)/deinit.c $(SRCS_DIR)/init_player.c \
+	$(SRCS_DIR)/handle.c $(SRCS_DIR)/sprites_player.c $(SRCS_DIR)/open_file.c
 OBJS = $(SRCS:.c=.o)
 
 # Path to the libft directory

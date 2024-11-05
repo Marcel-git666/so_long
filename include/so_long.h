@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/26 21:26:34 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/05 14:08:58 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,16 @@ typedef struct s_dimension
 }		t_dimension;
 
 typedef struct s_player_sprites {
-    void *up_stand;
-    void *up_walk;
-    void *up_walk2;
-    void *down_stand;
-    void *down_walk;
-    void *down_walk2;
-    void *left_stand;
-    void *left_walk;
-    void *right_stand;
-    void *right_walk;
+	void *up_stand;
+	void *up_walk;
+	void *up_walk2;
+	void *down_stand;
+	void *down_walk;
+	void *down_walk2;
+	void *left_stand;
+	void *left_walk;
+	void *right_stand;
+	void *right_walk;
 }		t_player_sprites;
 
 typedef struct s_game
@@ -91,14 +91,16 @@ typedef struct s_game
 
 int			validate_map(char **map);
 int			create_map(char *file_content, char ***map);
+int			open_file(char *name, char **file_content);
 void		init_graphics(t_game *game);
+void		init_player_position(t_data *data, char **map);
 int			handle_keypress(int keycode, t_data *data);
 int			handle_exit(t_data *data);
-void		draw_background(t_game *game);
-void		draw_foreground(t_game *game);
+void		draw_map(t_game *game);
 void		move_player(t_data *data, int dx, int dy);
 void		deinit(char **map, char *file_content, t_game *game);
 int			game_loop(t_game *game);
+void		*load_sprite(void *mlx_ptr, char *file_path, t_dimension *dim);
 t_sprites	*load_sprites(void *mlx_ptr);
 t_player_sprites *load_player_sprites(void *mlx_ptr);
 void		show_move_count(t_data *data);

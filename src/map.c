@@ -6,14 +6,14 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:28:49 by mmravec           #+#    #+#             */
-/*   Updated: 2024/10/11 20:01:02 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/05 12:28:24 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "so_long.h"
 
-int	check_walls(char **map, int i, int len)
+static int	check_walls(char **map, int i, int len)
 {
 	if ((i == 0 || !map[i + 1]) && ft_strchr(map[i], '0'))
 		return (write(2, "Error: Map not surrounded by walls\n", 35), 0);
@@ -22,7 +22,7 @@ int	check_walls(char **map, int i, int len)
 	return (1);
 }
 
-void	count_elements(char **map, int *counts, int i)
+static void	count_elements(char **map, int *counts, int i)
 {
 	int		j;
 
