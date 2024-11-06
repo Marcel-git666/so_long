@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:05:42 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 14:04:52 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/06 08:18:09 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static void	process_movement(int keycode, t_data *data)
 	}
 }
 
+/* ft_printf("Key %d is pressed.\n", keycode); */
 int	handle_keypress(int keycode, t_data *data)
 {
-	// ft_printf("Key %d is pressed.\n", keycode);
 	if (data->game_won)
 	{
 		mlx_loop_end(data->mlx_ptr);
