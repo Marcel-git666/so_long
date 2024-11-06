@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:43:33 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 17:29:14 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/05 21:12:08 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ void	move_player(t_data *data, int dx, int dy)
 		&& (data->map[new_y + dy][new_x + dx] == '0'
 		|| data->map[new_y + dy][new_x + dx] == 'E'))
 		handle_move_crate(data, new_x, new_y);
-	else if (data->map[new_y][new_x] == 'E')
+	else if (data->map[new_y][new_x] == 'E' && data->crate_count == 0)
 		handle_exit_condition(data, new_x, new_y);
 }
