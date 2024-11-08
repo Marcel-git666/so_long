@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 20:59:46 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/08 09:59:19 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ typedef struct s_dimension
 	int		height;
 }		t_dimension;
 
-typedef struct s_player_sprites {
+typedef struct s_player_sprites
+{
 	void	*up_stand;
 	void	*up_walk;
 	void	*up_walk2;
