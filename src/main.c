@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 21:02:26 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/08 10:10:45 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	check_correct_map_name(char *name)
 {
 	if (ft_strncmp(name + ft_strlen(name) - 4, ".ber", 4))
-		return (write(2, ".ber not detected\n", 19), 0);
+		return (write(2, "Error: .ber not detected\n", 25), 0);
 	return (1);
 }
 
