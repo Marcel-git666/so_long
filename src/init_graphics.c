@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:12:14 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 20:30:13 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/12 21:04:46 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static void	initialize_mlx(t_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 	{
-		write(2, "Error: Unable to initialize MiniLibX\n", 37);
+		write(2, "Error\nUnable to initialize MiniLibX\n", 36);
 		exit(1);
 	}
 	if (!data->map)
 	{
-		write(2, "Error: Map is NULL.\n", 20);
+		write(2, "Error\nMap is NULL.\n", 19);
 		exit(1);
 	}
 }
@@ -45,7 +45,7 @@ static void	create_window(t_data *data, int width, int height)
 	data->win_ptr = mlx_new_window(data->mlx_ptr, width, height, "so_long");
 	if (!data->win_ptr)
 	{
-		write(2, "Error: Unable to create window\n", 31);
+		write(2, "Error\nUnable to create window\n", 30);
 		exit(1);
 	}
 }

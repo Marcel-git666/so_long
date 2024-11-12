@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/12 14:50:15 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/12 21:02:56 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 int	check_correct_map_name(char *name)
 {
 	if (ft_strncmp(name + ft_strlen(name) - 4, ".ber", 4))
-		return (write(2, "Error: .ber not detected\n", 25), 0);
+		return (write(2, "Error\n.ber not detected\n", 24), 0);
 	return (1);
 }
 
 static int	validate_arguments(int argc, char *name)
 {
 	if (argc == 1)
-		return (write(2, "Error: no mapfile included.\n", 29), 0);
+		return (write(2, "Error\nno mapfile included.\n", 27), 0);
 	if (argc > 2)
-		return (write(2, "Error: too many arguments.\n", 28), 0);
+		return (write(2, "Error\ntoo many arguments.\n", 26), 0);
 	if (!check_correct_map_name(name))
 		return (0);
 	return (1);
@@ -35,7 +35,7 @@ static int	initialize_game(t_game **game)
 {
 	*game = (t_game *)malloc(sizeof(t_game));
 	if (!*game)
-		return (write(2, "Error: Memory allocation failed for game.\n", 42), 0);
+		return (write(2, "Error\nMemory allocation failed for game.\n", 41), 0);
 	(*game)->sprites = NULL;
 	(*game)->player_sprites = NULL;
 	return (1);
