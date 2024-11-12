@@ -6,7 +6,7 @@
 #    By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 16:05:35 by mmravec           #+#    #+#              #
-#    Updated: 2024/11/05 17:30:11 by mmravec          ###   ########.fr        #
+#    Updated: 2024/11/12 11:45:28 by mmravec          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS = $(SRCS_DIR)/main.c $(SRCS_DIR)/map.c $(SRCS_DIR)/init_graphics.c \
 	$(SRCS_DIR)/draw_map.c $(SRCS_DIR)/move.c $(SRCS_DIR)/game_loop.c \
 	$(SRCS_DIR)/sprites.c $(SRCS_DIR)/deinit.c $(SRCS_DIR)/init_player.c \
 	$(SRCS_DIR)/handle.c $(SRCS_DIR)/sprites_player.c $(SRCS_DIR)/open_file.c \
-	$(SRCS_DIR)/move_count.c
+	$(SRCS_DIR)/move_count.c $(SRCS_DIR)/map_path.c
 OBJS = $(SRCS:.c=.o)
 
 # Path to the libft directory

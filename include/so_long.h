@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:40:50 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/08 09:59:19 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/12 12:21:02 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,6 @@ t_sprites	*load_sprites(void *mlx_ptr);
 t_p_sprites	*load_player_sprites(void *mlx_ptr);
 void		show_move_count(t_data *data);
 void		animate_player(t_game *game, char direction, int frame);
+int			has_valid_path(char **map);
 
 #endif

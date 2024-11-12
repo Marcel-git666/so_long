@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/08 10:10:45 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/12 12:19:33 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	main(int argc, char **argv)
 	if (!create_map(file_content, &map))
 		return (free(file_content), free(game), 1);
 	if (!validate_map(map))
+		return (free_map(map), free(file_content), free(game), 1);
+	if (!has_valid_path(map))
 		return (free_map(map), free(file_content), free(game), 1);
 	ft_printf("Your map is valid. Good job!\n");
 	game->data.map = map;
