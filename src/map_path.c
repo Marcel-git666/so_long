@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:45:42 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/12 12:43:02 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/12 13:31:09 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	print_map(char **map)
 	}
 }
 
-t_point find_player_position(char **map)
+t_point	find_player_position(char **map)
 {
 	t_point pos;
 	int		i;
@@ -70,7 +70,7 @@ t_point find_player_position(char **map)
 	return (pos);
 }
 
-t_point get_map_size(char **map)
+t_point	get_map_size(char **map)
 {
 	t_point	size;
 
@@ -82,7 +82,7 @@ t_point get_map_size(char **map)
 	return (size);
 }
 
-char **copy_map(char **map, t_point size)
+char	**copy_map(char **map, t_point size)
 {
 	char	**map_cpy;
 	int		i;
@@ -150,7 +150,7 @@ int all_collectibles_and_exit_reachable(char **map, t_point size)
 		}
 		i++;
 	}
-	return (1);
+	return (is_exit_reachable(map, size));
 }
 
 int	has_valid_path(char **map)
