@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:06:55 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/05 14:07:17 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/12 21:00:26 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	append_to_content(char **file_content, char *buffer)
 	if (!temp)
 	{
 		free(*file_content);
-		write(2, "Error: Memory allocation failed.\n", 34);
+		write(2, "Error\nMemory allocation failed.\n", 32);
 		return (0);
 	}
 	free(*file_content);
@@ -37,10 +37,10 @@ int	open_file(char *name, char **file_content)
 
 	fd = open(name, O_RDONLY);
 	if (fd == -1)
-		return (write(2, "Error: Could not open file.\n", 28), 0);
+		return (write(2, "Error\nCould not open file.\n", 27), 0);
 	*file_content = (char *)malloc(1);
 	if (!*file_content)
-		return (write(2, "Error: Memory allocation failed.\n", 34), 0);
+		return (write(2, "Error\nMemory allocation failed.\n", 32), 0);
 	*file_content[0] = '\0';
 	ret = read(fd, buffer, 4096);
 	while (ret > 0)

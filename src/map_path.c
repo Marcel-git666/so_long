@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:45:42 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/12 14:49:25 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/12 20:57:51 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	has_valid_path(char **map)
 
 	player_pos = find_player_position(map);
 	if (player_pos.x == -1 || player_pos.y == -1)
-		return (write(2, "Error\nPlayer position not found", 31), 0);
+		return (write(2, "Error\nPlayer position not found\n", 32), 0);
 	map_size = get_map_size(map);
 	map_cpy = copy_map(map, map_size);
 	if (!map_cpy)
@@ -122,7 +122,7 @@ int	has_valid_path(char **map)
 	if (!all_collectibles_and_exit_reachable(map_cpy, map_size))
 	{
 		free_map(map_cpy);
-		return (write(2, "Error\nMap path not found", 24), 0);
+		return (write(2, "Error\nMap path not found\n", 25), 0);
 	}
 	free_map(map_cpy);
 	return (1);
