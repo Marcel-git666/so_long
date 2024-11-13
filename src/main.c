@@ -6,7 +6,7 @@
 /*   By: mmravec <mmravec@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:39:10 by mmravec           #+#    #+#             */
-/*   Updated: 2024/11/12 21:02:56 by mmravec          ###   ########.fr       */
+/*   Updated: 2024/11/13 10:24:37 by mmravec          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	check_correct_map_name(char *name)
 static int	validate_arguments(int argc, char *name)
 {
 	if (argc == 1)
-		return (write(2, "Error\nno mapfile included.\n", 27), 0);
+		return (write(2, "Error\nNo mapfile included.\n", 27), 0);
 	if (argc > 2)
-		return (write(2, "Error\ntoo many arguments.\n", 26), 0);
+		return (write(2, "Error\nToo many arguments.\n", 26), 0);
 	if (!check_correct_map_name(name))
 		return (0);
 	return (1);
